@@ -62,6 +62,14 @@ background: linear-gradient(135deg, var(--brand), var(--brand2));
 color:#06101d; font-weight: 900;
 box-shadow: var(--shadow);
 }
+.brand__logo-img{
+width: 42px;
+height: 42px;
+border-radius: 14px;
+object-fit: cover;
+border: 1px solid var(--line);
+box-shadow: var(--shadow);
+}
 .brand__name{ font-weight: 800; letter-spacing:.2px; }
 .brand__tag{ font-size: 12px; color: var(--muted); margin-top: 2px; }
 
