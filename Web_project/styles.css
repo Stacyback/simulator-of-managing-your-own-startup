@@ -109,7 +109,13 @@ margin-top: 8px;
 .hero__title{ font-size: 40px; margin: 0 0 10px; letter-spacing: -0.6px; }
 .hero__subtitle{ margin: 0 0 16px; color: var(--muted); line-height: 1.6; }
 .hero__actions{ display:flex; gap: 10px; flex-wrap:wrap; margin-bottom: 16px; }
-
+.hero-img{
+width: 100%;
+height: auto;
+border-radius: var(--radius);
+border: 1px solid var(--line);
+margin: 12px 0 0;
+}
 .kpis{
 display:grid;
 grid-template-columns: repeat(4, 1fr);
