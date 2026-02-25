@@ -1,0 +1,108 @@
+/* Базові стилі */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+header {
+    background-color: #1f2937;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #38bdf8;
+}
+
+section {
+    padding: 40px 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* GRID для конкурентів та інвесторів */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Footer */
+
+footer {
+    background-color: #1f2937;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+/* ============================= */
+/* 📱 Media Query для планшетів */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+}
+
+/* ============================= */
+/* 📱 Media Query для телефонів */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        font-size: 14px;
+        padding: 15px;
+    }
+
+}
