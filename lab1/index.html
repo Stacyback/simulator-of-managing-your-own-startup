@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Startup Simulator — Lab 1</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+<a class="skip-link" href="#main">Перейти до контенту</a>
+
+<header class="topbar">
+    <div class="topbar__left">
+    <div class="brand">
+        <img class="brand__logo-img" src="img/logo.png" alt="Логотип Startup Simulator">
+        <div class="brand__text">
+        <div class="brand__name">Startup Simulator</div>
+        <div class="brand__tag">Manage • Market • Investors</div>
+    </div>
+    </div>
+    </div>
+
+    <nav class="topbar__nav" aria-label="Головна навігація">
+    <a class="navlink" href="#startup">Мій стартап</a>
+    <a class="navlink" href="#market">Ринок</a>
+    <a class="navlink" href="#investors">Інвестори</a>
+    <a class="navlink" href="#report">Звіт</a>
+    </nav>
+
+</header>
+
+<main id="main" class="container">
+    <!-- HERO -->
+    <section class="hero" aria-label="Огляд">
+    <div class="hero__content">
+        <h1 class="hero__title">Керуйте стартапом як продуктом</h1>
+        <p class="hero__subtitle">
+        Налаштовуйте параметри бізнесу, порівнюйте конкурентів, знаходьте інвесторів і генеруйте короткий звіт.
+        </p>
+
+        <img class="hero-img"
+            src="img/hero.jpeg"
+            alt="Візуалізація дашборду симулятора стартапу">
+
+        <div class="hero__actions">
+        <a class="btn" href="#startup">До керування →</a>
+        <a class="btn btn--ghost" href="#market">Перейти до ринку →</a>
+        </div>
+
+        <div class="kpis" aria-label="Ключові показники">
+        <div class="kpi">
+            <div class="kpi__label">MRR (прибуток/міс)</div>
+            <div class="kpi__value">$120 000</div>
+            <div class="kpi__hint">Сильний MRR</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi__label">Витрати/міс</div>
+            <div class="kpi__value">$80 000</div>
+            <div class="kpi__hint">Витрати контрольовані</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi__label">Прибуток (Net)</div>
+            <div class="kpi__value">+$40 000</div>
+            <div class="kpi__hint">Прибутково ✅</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi__label">Burn / Runway</div>
+            <div class="kpi__value">—</div>
+            <div class="kpi__hint">Оцінка “скільки місяців протримаємось”</div>
+        </div>
+        </div>
+    </div>
+
+    <div class="hero__panel" aria-label="Стан">
+        <div class="panel">
+        <div class="panel__title">Рівень готовності</div>
+        <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
+            <div class="meter__bar" style="width:70%"></div>
+        </div>
+
+        <ul class="bullets">
+            <li>MVP готовий і протестований на перших користувачах.</li>
+            <li>MRR стабільний, потрібно підвищити конверсію в оплату.</li>
+            <li>Контролюємо витрати та плануємо runway мінімум на 6 місяців.</li>
+            <li>План росту: ЄС → США, фокус на retention.</li>
+        </ul>
+
+        <div class="panel__footer">
+            <span class="pill">Stage: MVP</span>
+            <span class="pill pill--soft">Risk: Medium</span>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- STARTUP -->
+    <section id="startup" class="section">
+    <div class="section__head">
+        <h2>Мій стартап</h2>
+        <p>Опис компанії та базові бізнес-параметри.</p>
+    </div>
+
+    <div class="grid-2">
+        <article class="card">
+        <h3 class="card__title">Опис</h3>
+
+        <div class="mini">
+            <div class="mini__row">
+            <span class="mini__label">Назва</span>
+            <span class="mini__value">NovaPulse</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Сфера</span>
+            <span class="mini__value">SaaS</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Працівники</span>
+            <span class="mini__value">18</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">MRR</span>
+            <span class="mini__value">$120 000 / місяць</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Витрати</span>
+            <span class="mini__value">$80 000 / місяць</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Ринки</span>
+            <span class="mini__value">Україна, ЄС</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Офіси</span>
+            <span class="mini__value">Львів, Київ</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3 class="card__title">Можливості симулятора</h3>
+        <ul class="bullets">
+            <li>Аналіз фінансових показників (прибуток/витрати).</li>
+            <li>Порівняння конкурентів за сферами та масштабом.</li>
+            <li>Оцінка ринків збуту та присутності стартапу.</li>
+            <li>Підбір потенційних інвесторів за фокусом.</li>
+        </ul>
+        </article>
+
+        <aside class="card">
+        <h3 class="card__title">Портрет стартапу</h3>
+
+        <div class="profile">
+            <div class="profile__avatar" aria-hidden="true">NP</div>
+            <div class="profile__meta">
+            <div class="profile__name">NovaPulse</div>
+            <div class="profile__line">SaaS • MVP • 18 ppl</div>
+            </div>
+        </div>
+
+        <div class="chips">
+            <span class="chip">MRR: $120 000</span>
+            <span class="chip">Витрати: $80 000</span>
+            <span class="chip">Net: +$40 000</span>
+            <span class="chip">Ринки: UA, EU</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="mini">
+            <div class="mini__row">
+            <span class="mini__label">Ринки</span>
+            <span class="mini__value">Україна, ЄС</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Офіси</span>
+            <span class="mini__value">Львів, Київ</span>
+            </div>
+            <div class="mini__row">
+            <span class="mini__label">Рекомендація</span>
+            <span class="mini__value">Фокус на конверсію та retention.</span>
+            </div>
+        </div>
+        </aside>
+    </div>
+    </section>
+
+    <!-- MARKET -->
+    <section id="market" class="section">
+    <div class="section__head">
+        <h2>Ринок</h2>
+        <p>Список конкурентів </p>
+    </div>
+
+    <div class="grid-cards" aria-label="Список конкурентів">
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">TechNova</div>
+            <span class="badge">AI • Score 82</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Розмір:</b> 120 працівників</div>
+            <div><b>Ринки:</b> США, ЄС</div>
+            <div><b>Прибуток:</b> $2M</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">Cloudify</div>
+            <span class="badge">SaaS • Score 74</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Розмір:</b> 80 працівників</div>
+            <div><b>Ринки:</b> ЄС</div>
+            <div><b>Прибуток:</b> $1.2M</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">DataPeak</div>
+            <span class="badge">Big Data • Score 88</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Розмір:</b> 200 працівників</div>
+            <div><b>Ринки:</b> Глобально</div>
+            <div><b>Прибуток:</b> $5M</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">FinEdge</div>
+            <span class="badge">FinTech • Score 69</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Розмір:</b> 60 працівників</div>
+            <div><b>Ринки:</b> ЄС, UK</div>
+            <div><b>Прибуток:</b> $0.9M</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">LoopSaaS</div>
+            <span class="badge">SaaS • Score 63</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Розмір:</b> 45 працівників</div>
+            <div><b>Ринки:</b> США</div>
+            <div><b>Прибуток:</b> $0.65M</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">AImpress</div>
+            <span class="badge">AI • Score 80</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Розмір:</b> 140 працівників</div>
+            <div><b>Ринки:</b> Глобально</div>
+            <div><b>Прибуток:</b> $3.2M</div>
+        </div>
+        </div>
+    </div>
+
+    <div class="card card--soft" style="margin-top:12px;">
+        <h3 class="card__title">Тренди та можливості</h3>
+        <div class="grid-3">
+        <div class="callout">
+            <div class="callout__title">AI-помічники</div>
+            <div class="callout__text">Інтеграція AI як підсилення продукту та автоматизації процесів.</div>
+        </div>
+        <div class="callout">
+            <div class="callout__title">Фіндисципліна</div>
+            <div class="callout__text">Контроль витрат, оптимізація команди та прозора аналітика.</div>
+        </div>
+        <div class="callout">
+            <div class="callout__title">Мікро-ніші</div>
+            <div class="callout__text">Фокус на вузькому сегменті й швидкі тести гіпотез.</div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- INVESTORS -->
+    <section id="investors" class="section">
+    <div class="section__head">
+        <h2>Інвестори</h2>
+        <p>Потенційні інвестори (назва, сфери, об’єм портфелю). </p>
+    </div>
+
+    <div class="grid-cards" aria-label="Список інвесторів">
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">Alpha Ventures</div>
+            <span class="badge">$50M</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Сфери:</b> FinTech, AI</div>
+            <div><b>Фокус:</b> seed–A</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">Future Capital</div>
+            <span class="badge">$120M</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Сфери:</b> SaaS</div>
+            <div><b>Фокус:</b> A–B</div>
+        </div>
+        </div>
+
+        <div class="item">
+        <div class="item__top">
+            <div class="item__title">Innovate Fund</div>
+            <span class="badge">$75M</span>
+        </div>
+        <div class="item__meta">
+            <div><b>Сфери:</b> Startups, EdTech</div>
+            <div><b>Фокус:</b> seed</div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="report" class="section">
+    <div class="section__head">
+        <h2>Короткий звіт</h2>
+    </div>
+
+    <div class="card">
+        <div class="report">
+        <textarea rows="10" readonly>
+Мій стартап: NovaPulse (SaaS, stage: MVP).
+Команда: 18 людей. Ринки: Україна, ЄС. Офіси: Львів, Київ.
+
+Фінанси:
+• MRR: $120 000
+• Витрати: $80 000
+• Net: +$40 000
+
+Рекомендація:
+Фокус на зростання конверсії в оплату та утримання користувачів (retention).
+
+Наступні кроки:
+1) Протестувати 2–3 гіпотези росту за 7 днів.
+2) Покращити onboarding та підписку.
+3) Підготувати пітч для інвесторів.
+        </textarea>
+        </div>
+    </div>
+    </section>
+
+    <footer class="footer">
+    <div>📍 Львів • 📧 startup@mail.com • ☎ +380 00 000 0000</div>
+    <div class="footer__muted">© 2026 Startup Simulator</div>
+    </footer>
+    </main>
+</body>
+</html>
