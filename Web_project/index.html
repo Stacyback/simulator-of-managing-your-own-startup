@@ -1,98 +1,338 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startup Simulator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Startup Simulator — Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+  <a class="skip-link" href="#main">Перейти до контенту</a>
 
-<header>
-    <h1>Startup Management Simulator</h1>
-    <nav>
-        <ul>
-            <li><a href="#startup">Мій стартап</a></li>
-            <li><a href="#market">Ринок</a></li>
-            <li><a href="#investors">Інвестори</a></li>
-        </ul>
+  <header class="topbar">
+    <div class="topbar__left">
+      <div class="brand">
+        <div class="brand__logo" aria-hidden="true">S</div>
+        <div class="brand__text">
+          <div class="brand__name">Startup Simulator</div>
+          <div class="brand__tag">Manage • Market • Investors</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="topbar__nav" aria-label="Головна навігація">
+      <a class="navlink" href="#startup">Мій стартап</a>
+      <a class="navlink" href="#market">Ринок</a>
+      <a class="navlink" href="#investors">Інвестори</a>
+      <a class="navlink" href="#report">Звіт</a>
     </nav>
-</header>
 
-<main>
-
-<section id="startup">
-    <h2>Мій стартап</h2>
-    <img src="https://via.placeholder.com/800x300" alt="Startup office">
-    <article>
-        <p><strong>Сфера:</strong> IT / SaaS</p>
-        <p><strong>Працівники:</strong> 25</p>
-        <p><strong>Прибуток:</strong> $120 000 / місяць</p>
-        <p><strong>Витрати:</strong> $80 000 / місяць</p>
-        <p><strong>Ринки:</strong> Україна, ЄС</p>
-    </article>
-</section>
-
-<section id="market">
-    <h2>Ринок та конкуренти</h2>
-
-    <div class="grid-container">
-        <div class="card">
-            <h3>TechNova</h3>
-            <p>Сфера: AI</p>
-            <p>Розмір: 120 працівників</p>
-            <p>Ринки: США, ЄС</p>
-            <p>Прибуток: $2M</p>
-        </div>
-
-        <div class="card">
-            <h3>Cloudify</h3>
-            <p>Сфера: SaaS</p>
-            <p>Розмір: 80 працівників</p>
-            <p>Ринки: ЄС</p>
-            <p>Прибуток: $1.2M</p>
-        </div>
-
-        <div class="card">
-            <h3>DataPeak</h3>
-            <p>Сфера: Big Data</p>
-            <p>Розмір: 200 працівників</p>
-            <p>Ринки: Глобально</p>
-            <p>Прибуток: $5M</p>
-        </div>
+    <div class="topbar__right">
+      <button class="btn btn--ghost" id="themeBtn" type="button" aria-pressed="false" title="Перемкнути тему">
+        🌙 Тема
+      </button>
+      <button class="btn" id="resetBtn" type="button" title="Скинути до дефолтних значень">
+        ↺ Reset
+      </button>
     </div>
-</section>
+  </header>
 
-<section id="investors">
-    <h2>Інвестори</h2>
+  <main id="main" class="container">
+    <!-- HERO -->
+    <section class="hero" aria-label="Огляд">
+      <div class="hero__content">
+        <h1 class="hero__title">Керуйте стартапом як продуктом</h1>
+        <p class="hero__subtitle">
+          Налаштовуйте параметри бізнесу, порівнюйте конкурентів, знаходьте інвесторів і генеруйте короткий звіт.
+        </p>
 
-    <div class="grid-container">
-        <div class="card">
-            <h3>Alpha Ventures</h3>
-            <p>Сфера: FinTech, AI</p>
-            <p>Портфель: $50M</p>
+        <div class="hero__actions">
+          <button class="btn" id="openAddInvestor" type="button">+ Додати інвестора</button>
+          <a class="btn btn--ghost" href="#startup">До керування →</a>
         </div>
 
-        <div class="card">
-            <h3>Future Capital</h3>
-            <p>Сфера: SaaS</p>
-            <p>Портфель: $120M</p>
+        <div class="kpis" aria-label="Ключові показники">
+          <div class="kpi">
+            <div class="kpi__label">MRR (прибуток/міс)</div>
+            <div class="kpi__value" id="kpiRevenue">$0</div>
+            <div class="kpi__hint" id="kpiRevenueHint">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi__label">Витрати/міс</div>
+            <div class="kpi__value" id="kpiCosts">$0</div>
+            <div class="kpi__hint" id="kpiCostsHint">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi__label">Прибуток (Net)</div>
+            <div class="kpi__value" id="kpiProfit">$0</div>
+            <div class="kpi__hint" id="kpiProfitHint">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi__label">Burn / Runway</div>
+            <div class="kpi__value" id="kpiRunway">—</div>
+            <div class="kpi__hint">Оцінка “скільки місяців протримаємось”</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__panel" aria-label="Стан">
+        <div class="panel">
+          <div class="panel__title">Рівень готовності</div>
+          <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="meter__bar" id="readinessBar"></div>
+          </div>
+          <ul class="bullets" id="readinessList">
+            <!-- JS заповнить -->
+          </ul>
+          <div class="panel__footer">
+            <span class="pill" id="stagePill">Stage: —</span>
+            <span class="pill pill--soft" id="riskPill">Risk: —</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STARTUP -->
+    <section id="startup" class="section">
+      <div class="section__head">
+        <h2>Мій стартап</h2>
+        <p>Створіть компанію та керуйте параметрами бізнесу (працівники, прибуток, витрати, ринки, офіси).</p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3 class="card__title">Параметри</h3>
+
+          <form class="form" id="startupForm">
+            <div class="field">
+              <label for="startupName">Назва стартапу</label>
+              <input id="startupName" type="text" placeholder="Напр. NovaPulse" />
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="industry">Сфера</label>
+                <select id="industry">
+                  <option>SaaS</option>
+                  <option>AI</option>
+                  <option>FinTech</option>
+                  <option>EdTech</option>
+                  <option>E-commerce</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="stage">Стадія</label>
+                <select id="stage">
+                  <option value="Idea">Idea</option>
+                  <option value="MVP">MVP</option>
+                  <option value="Growth">Growth</option>
+                  <option value="Scale">Scale</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-3">
+              <div class="field">
+                <label for="employees">Працівники</label>
+                <input id="employees" type="number" min="1" step="1" />
+              </div>
+
+              <div class="field">
+                <label for="revenue">MRR ($/міс)</label>
+                <input id="revenue" type="number" min="0" step="100" />
+              </div>
+
+              <div class="field">
+                <label for="costs">Витрати ($/міс)</label>
+                <input id="costs" type="number" min="0" step="100" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="markets">Ринки збуту (через кому)</label>
+                <input id="markets" type="text" placeholder="Україна, ЄС, США" />
+              </div>
+              <div class="field">
+                <label for="offices">Офіси (міста через кому)</label>
+                <input id="offices" type="text" placeholder="Львів, Київ" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="cash">Cash / резерв ($)</label>
+              <input id="cash" type="number" min="0" step="1000" />
+              <div class="help">Використовується для оцінки runway</div>
+            </div>
+
+            <div class="actions">
+              <button class="btn" type="submit">Зберегти</button>
+              <button class="btn btn--ghost" type="button" id="generateReport">Згенерувати звіт</button>
+            </div>
+          </form>
+        </article>
+
+        <aside class="card">
+          <h3 class="card__title">Портрет стартапу</h3>
+
+          <div class="profile">
+            <div class="profile__avatar" aria-hidden="true" id="avatar">NP</div>
+            <div class="profile__meta">
+              <div class="profile__name" id="profileName">—</div>
+              <div class="profile__line" id="profileLine">—</div>
+            </div>
+          </div>
+
+          <div class="chips" id="chips">
+            <!-- JS -->
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="mini">
+            <div class="mini__row">
+              <span class="mini__label">Ринки</span>
+              <span class="mini__value" id="profileMarkets">—</span>
+            </div>
+            <div class="mini__row">
+              <span class="mini__label">Офіси</span>
+              <span class="mini__value" id="profileOffices">—</span>
+            </div>
+            <div class="mini__row">
+              <span class="mini__label">Рекомендація</span>
+              <span class="mini__value" id="profileAdvice">—</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- MARKET -->
+    <section id="market" class="section">
+      <div class="section__head">
+        <h2>Ринок</h2>
+        <p>Аналіз конкурентів (сфера, розмір компанії, ринки, фінансові показники) + тренди.</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <input id="competitorSearch" type="search" placeholder="Пошук конкурента…" />
+        </div>
+        <select id="competitorFilter">
+          <option value="ALL">Усі сфери</option>
+          <option value="AI">AI</option>
+          <option value="SaaS">SaaS</option>
+          <option value="FinTech">FinTech</option>
+          <option value="Big Data">Big Data</option>
+        </select>
+      </div>
+
+      <div class="grid-cards" id="competitorsGrid" aria-label="Список конкурентів">
+        <!-- JS -->
+      </div>
+
+      <div class="card card--soft">
+        <h3 class="card__title">Тренди та можливості</h3>
+        <div class="grid-3">
+          <div class="callout">
+            <div class="callout__title">AI-помічники</div>
+            <div class="callout__text">Вбудовуйте AI у продукт, але фокус на користь/ROI.</div>
+          </div>
+          <div class="callout">
+            <div class="callout__title">Фіндисципліна</div>
+            <div class="callout__text">Слідкуйте за burn rate і збільшуйте runway.</div>
+          </div>
+          <div class="callout">
+            <div class="callout__title">Мікро-ніші</div>
+            <div class="callout__text">Бийте у чіткий сегмент і швидко тестуйте гіпотези.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVESTORS -->
+    <section id="investors" class="section">
+      <div class="section__head">
+        <h2>Інвестори</h2>
+        <p>Список потенційних інвесторів (назва, сфера, об’єм портфелю). Є пошук і сортування.</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <input id="investorSearch" type="search" placeholder="Пошук інвестора…" />
         </div>
 
-        <div class="card">
-            <h3>Innovate Fund</h3>
-            <p>Сфера: Startups</p>
-            <p>Портфель: $75M</p>
+        <select id="investorSort">
+          <option value="PORTFOLIO_DESC">Портфель: спадання</option>
+          <option value="PORTFOLIO_ASC">Портфель: зростання</option>
+          <option value="NAME_ASC">Назва: A→Z</option>
+          <option value="NAME_DESC">Назва: Z→A</option>
+        </select>
+
+        <button class="btn" id="addInvestorBtn" type="button">+ Додати</button>
+      </div>
+
+      <div class="grid-cards" id="investorsGrid" aria-label="Список інвесторів">
+        <!-- JS -->
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="report" class="section">
+      <div class="section__head">
+        <h2>Короткий звіт</h2>
+        <p>Згенеруй текст для захисту: хто ви, що робите, показники, ризики, наступні кроки.</p>
+      </div>
+
+      <div class="card">
+        <div class="report">
+          <textarea id="reportText" rows="10" placeholder="Натисни “Згенерувати звіт”…"></textarea>
+          <div class="actions">
+            <button class="btn btn--ghost" id="copyReport" type="button">Копіювати</button>
+          </div>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-</main>
+    <footer class="footer">
+      <div>📍 Львів • 📧 startup@mail.com • ☎ +380 00 000 0000</div>
+      <div class="footer__muted">© 2026 Startup Simulator</div>
+    </footer>
+  </main>
 
-<footer>
-    <p>📍 Львів | 📧 startup@mail.com | ☎ +380 00 000 0000</p>
-    <p>© 2026 Startup Simulator</p>
-</footer>
+  <!-- MODAL: Add Investor -->
+  <dialog class="modal" id="investorModal" aria-label="Додати інвестора">
+    <form method="dialog" class="modal__card" id="investorForm">
+      <div class="modal__head">
+        <h3>Додати інвестора</h3>
+        <button class="btn btn--ghost" type="button" id="closeModal" title="Закрити">✕</button>
+      </div>
 
+      <div class="grid-2">
+        <div class="field">
+          <label for="invName">Назва</label>
+          <input id="invName" type="text" placeholder="Напр. Alpha Ventures" required />
+        </div>
+        <div class="field">
+          <label for="invPortfolio">Портфель ($)</label>
+          <input id="invPortfolio" type="number" min="0" step="1000000" placeholder="50000000" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="invFocus">Сфери (через кому)</label>
+        <input id="invFocus" type="text" placeholder="SaaS, AI, FinTech" required />
+      </div>
+
+      <div class="actions">
+        <button class="btn" value="default" type="submit">Зберегти</button>
+        <button class="btn btn--ghost" value="cancel" type="button" id="cancelModal">Скасувати</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
 </body>
 </html>
