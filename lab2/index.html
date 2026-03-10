@@ -1,367 +1,516 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Startup Simulator — Lab 1</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaunchOS — Симулятор Стартапу</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-<a class="skip-link" href="#main">Перейти до контенту</a>
 
-<header class="topbar">
-    <div class="topbar__left">
-    <div class="brand">
-        <img class="brand__logo-img" src="img/logo.png" alt="Логотип Startup Simulator">
-        <div class="brand__text">
-        <div class="brand__name">Startup Simulator</div>
-        <div class="brand__tag">Manage • Market • Investors</div>
-    </div>
-    </div>
-    </div>
+  <!-- ══ ШАПКА ══════════════════════════════════════════ -->
+  <header>
+    <nav>
+      <a class="nav-logo" href="#">Launch<span>OS</span></a>
 
-    <nav class="topbar__nav" aria-label="Головна навігація">
-    <a class="navlink" href="#startup">Мій стартап</a>
-    <a class="navlink" href="#market">Ринок</a>
-    <a class="navlink" href="#investors">Інвестори</a>
-    <a class="navlink" href="#report">Звіт</a>
+      <!-- Кнопка-бургер для мобільних пристроїв -->
+      <button class="nav-toggle" id="navToggle" aria-label="Відкрити меню">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#startup" class="active">Мій Стартап</a></li>
+        <li><a href="#market">Ринок</a></li>
+        <li><a href="#investors">Інвестори</a></li>
+      </ul>
     </nav>
+  </header>
 
-</header>
-
-<main id="main" class="container">
-    <!-- HERO -->
-    <section class="hero" aria-label="Огляд">
-    <div class="hero__content">
-        <h1 class="hero__title">Керуйте стартапом як продуктом</h1>
-        <p class="hero__subtitle">
-        Налаштовуйте параметри бізнесу, порівнюйте конкурентів, знаходьте інвесторів і генеруйте короткий звіт.
-        </p>
-
-        <img class="hero-img"
-            src="img/hero.jpeg"
-            alt="Візуалізація дашборду симулятора стартапу">
-
-        <div class="hero__actions">
-        <a class="btn" href="#startup">До керування →</a>
-        <a class="btn btn--ghost" href="#market">Перейти до ринку →</a>
+  <!-- ══ ГЕРОЙ ══════════════════════════════════════════ -->
+  <div class="hero">
+    <div class="hero-inner">
+      <h1>Побудуй свою <em>імперію</em> з нуля.</h1>
+      <p class="hero-sub">Керуй віртуальним стартапом — розвивай команду, обганяй конкурентів та закривай перший раунд фінансування.</p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value green">$142K</div>
+          <div class="hero-stat-label">Місячний дохід</div>
         </div>
-
-        <div class="kpis" aria-label="Ключові показники">
-        <div class="kpi">
-            <div class="kpi__label">MRR (прибуток/міс)</div>
-            <div class="kpi__value">$120 000</div>
-            <div class="kpi__hint">Сильний MRR</div>
+        <div>
+          <div class="hero-stat-value amber">14</div>
+          <div class="hero-stat-label">Співробітників</div>
         </div>
-        <div class="kpi">
-            <div class="kpi__label">Витрати/міс</div>
-            <div class="kpi__value">$80 000</div>
-            <div class="kpi__hint">Витрати контрольовані</div>
+        <div>
+          <div class="hero-stat-value red">3</div>
+          <div class="hero-stat-label">Активних конкурентів</div>
         </div>
-        <div class="kpi">
-            <div class="kpi__label">Прибуток (Net)</div>
-            <div class="kpi__value">+$40 000</div>
-            <div class="kpi__hint">Прибутково ✅</div>
+        <div>
+          <div class="hero-stat-value">Серія A</div>
+          <div class="hero-stat-label">Поточний етап</div>
         </div>
-        <div class="kpi">
-            <div class="kpi__label">Burn / Runway</div>
-            <div class="kpi__value">—</div>
-            <div class="kpi__hint">Оцінка “скільки місяців протримаємось”</div>
-        </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="hero__panel" aria-label="Стан">
-        <div class="panel">
-        <div class="panel__title">Рівень готовності</div>
-        <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
-            <div class="meter__bar" style="width:70%"></div>
+  <!-- ══ ОСНОВНИЙ КОНТЕНТ ════════════════════════════════ -->
+  <main>
+
+    <!-- ── МІЙ СТАРТАП ──────────────────────────────────── -->
+    <section id="startup">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2 class="section-title">Мій Стартап</h2>
         </div>
 
-        <ul class="bullets">
-            <li>MVP готовий і протестований на перших користувачах.</li>
-            <li>MRR стабільний, потрібно підвищити конверсію в оплату.</li>
-            <li>Контролюємо витрати та плануємо runway мінімум на 6 місяців.</li>
-            <li>План росту: ЄС → США, фокус на retention.</li>
-        </ul>
+        <!-- Банерне зображення стартапу -->
+        <img
+          class="startup-banner"
+          src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80"
+          alt="Команда стартапу NexGen AI Solutions за роботою"
+        />
 
-        <div class="panel__footer">
-            <span class="pill">Stage: MVP</span>
-            <span class="pill pill--soft">Risk: Medium</span>
-        </div>
-        </div>
-    </div>
-    </section>
+        <!-- Стаття з описом компанії -->
+        <article>
+          <p class="startup-intro">
+            <strong>NexGen AI Solutions</strong> — це технологічний стартап у сфері штучного інтелекту, заснований у 2023 році в Києві. Наша місія — демократизувати доступ до інструментів машинного навчання для малого та середнього бізнесу по всьому світу. Наразі компанія перебуває на етапі Серії A та активно розширює присутність на ринках США, Європи та Азійсько-Тихоокеанського регіону.
+          </p>
 
-    <!-- STARTUP -->
-    <section id="startup" class="section">
-    <div class="section__head">
-        <h2>Мій стартап</h2>
-        <p>Опис компанії та базові бізнес-параметри.</p>
-    </div>
-
-    <div class="grid-2">
-        <article class="card">
-        <h3 class="card__title">Опис</h3>
-
-        <div class="mini">
-            <div class="mini__row">
-            <span class="mini__label">Назва</span>
-            <span class="mini__value">NovaPulse</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Сфера</span>
-            <span class="mini__value">SaaS</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Працівники</span>
-            <span class="mini__value">18</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">MRR</span>
-            <span class="mini__value">$120 000 / місяць</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Витрати</span>
-            <span class="mini__value">$80 000 / місяць</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Ринки</span>
-            <span class="mini__value">Україна, ЄС</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Офіси</span>
-            <span class="mini__value">Львів, Київ</span>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <h3 class="card__title">Можливості симулятора</h3>
-        <ul class="bullets">
-            <li>Аналіз фінансових показників (прибуток/витрати).</li>
-            <li>Порівняння конкурентів за сферами та масштабом.</li>
-            <li>Оцінка ринків збуту та присутності стартапу.</li>
-            <li>Підбір потенційних інвесторів за фокусом.</li>
-        </ul>
+          <!-- Список ключових функцій / переваг продукту -->
+          <h3 class="features-title">Ключові функції платформи:</h3>
+          <ul class="features-list">
+            <li><strong>Автоматизація процесів</strong> — скорочення ручної роботи на 70% завдяки ШІ-агентам</li>
+            <li><strong>Аналітика в реальному часі</strong> — дашборди з даними оновлюються щосекунди</li>
+            <li><strong>Інтеграція без коду</strong> — підключення до 200+ сервісів без участі розробника</li>
+            <li><strong>Масштабована інфраструктура</strong> — хмарна архітектура витримує до 10 млн запитів на добу</li>
+            <li><strong>Безпека та відповідність</strong> — сертифікати ISO 27001 та відповідність вимогам GDPR</li>
+          </ul>
         </article>
 
-        <aside class="card">
-        <h3 class="card__title">Портрет стартапу</h3>
+        <!-- Картки параметрів компанії (CSS Grid) -->
+        <div class="startup-grid">
 
-        <div class="profile">
-            <div class="profile__avatar" aria-hidden="true">NP</div>
-            <div class="profile__meta">
-            <div class="profile__name">NovaPulse</div>
-            <div class="profile__line">SaaS • MVP • 18 ppl</div>
-            </div>
-        </div>
+          <!-- Інформація про компанію -->
+          <div class="startup-card">
+            <p class="card-title">NexGen AI Solutions</p>
+            <ul class="info-list">
+              <li>
+                <span class="info-key">Сфера</span>
+                <span class="info-val">Штучний інтелект</span>
+              </li>
+              <li>
+                <span class="info-key">Заснована</span>
+                <span class="info-val">2023</span>
+              </li>
+              <li>
+                <span class="info-key">Етап</span>
+                <span class="badge badge-amber">Серія A</span>
+              </li>
+              <li>
+                <span class="info-key">Статус</span>
+                <span class="badge badge-green">Активна</span>
+              </li>
+              <li>
+                <span class="info-key">Ринки збуту</span>
+                <span class="info-val">США · ЄС · АТР</span>
+              </li>
+              <li>
+                <span class="info-key">Офіси</span>
+                <span class="info-val">2 (Львів, Берлін)</span>
+              </li>
+              <li>
+                <span class="info-key">Кількість працівників</span>
+                <span class="info-val">14</span>
+              </li>
+            </ul>
+          </div>
 
-        <div class="chips">
-            <span class="chip">MRR: $120 000</span>
-            <span class="chip">Витрати: $80 000</span>
-            <span class="chip">Net: +$40 000</span>
-            <span class="chip">Ринки: UA, EU</span>
-        </div>
+          <!-- Параметри бізнесу -->
+          <div class="startup-card">
+            <p class="card-title">Параметри бізнесу</p>
+            <div class="param-list">
+              <div class="param-item">
+                <div class="param-header">
+                  <span class="param-name">Співробітники</span>
+                  <span class="param-val">14 / 50</span>
+                </div>
+                <div class="param-bar"><div class="param-fill amber" style="width:28%"></div></div>
+              </div>
+              <div class="param-item">
+                <div class="param-header">
+                  <span class="param-name">Місячний дохід</span>
+                  <span class="param-val">$142K</span>
+                </div>
+                <div class="param-bar"><div class="param-fill green" style="width:57%"></div></div>
+              </div>
+              <div class="param-item">
+                <div class="param-header">
+                  <span class="param-name">Місячні витрати</span>
+                  <span class="param-val">$98K</span>
+                </div>
+                <div class="param-bar"><div class="param-fill amber" style="width:39%"></div></div>
+              </div>
+              <div class="param-item">
+                <div class="param-header">
+                  <span class="param-name">Частка ринку</span>
+                  <span class="param-val">4.2%</span>
+                </div>
+                <div class="param-bar"><div class="param-fill green" style="width:21%"></div></div>
+              </div>
+              <div class="param-item">
+                <div class="param-header">
+                  <span class="param-name">Темп витрат</span>
+                  <span class="param-val">Високий</span>
+                </div>
+                <div class="param-bar"><div class="param-fill red" style="width:71%"></div></div>
+              </div>
+              <div class="param-item">
+                <div class="param-header">
+                  <span class="param-name">Задоволеність клієнтів</span>
+                  <span class="param-val">87%</span>
+                </div>
+                <div class="param-bar"><div class="param-fill green" style="width:87%"></div></div>
+              </div>
+            </div>
+          </div>
 
-        <div class="divider"></div>
+          <!-- Розбивка доходів по ринках -->
+          <div class="startup-card startup-card-full">
+            <p class="card-title">Ринки збуту — Розбивка доходів</p>
+            <ul class="info-list" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1.5rem;">
+              <li><span class="info-key">США</span><span class="badge badge-green">$74K / міс</span></li>
+              <li><span class="info-key">Європа</span><span class="badge badge-amber">$46K / міс</span></li>
+              <li><span class="info-key">Азійсько-Тихоокеанський</span><span class="badge badge-ember">$22K / міс</span></li>
+            </ul>
+          </div>
 
-        <div class="mini">
-            <div class="mini__row">
-            <span class="mini__label">Ринки</span>
-            <span class="mini__value">Україна, ЄС</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Офіси</span>
-            <span class="mini__value">Львів, Київ</span>
-            </div>
-            <div class="mini__row">
-            <span class="mini__label">Рекомендація</span>
-            <span class="mini__value">Фокус на конверсію та retention.</span>
-            </div>
-        </div>
-        </aside>
-    </div>
+        </div><!-- /startup-grid -->
+      </div>
     </section>
 
-    <!-- MARKET -->
-    <section id="market" class="section">
-    <div class="section__head">
-        <h2>Ринок</h2>
-        <p>Список конкурентів </p>
-    </div>
-
-    <div class="grid-cards" aria-label="Список конкурентів">
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">TechNova</div>
-            <span class="badge">AI • Score 82</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Розмір:</b> 120 працівників</div>
-            <div><b>Ринки:</b> США, ЄС</div>
-            <div><b>Прибуток:</b> $2M</div>
-        </div>
+    <!-- ── РИНОК ──────────────────────────────────────────── -->
+    <section id="market">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2 class="section-title">Ринок</h2>
         </div>
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">Cloudify</div>
-            <span class="badge">SaaS • Score 74</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Розмір:</b> 80 працівників</div>
-            <div><b>Ринки:</b> ЄС</div>
-            <div><b>Прибуток:</b> $1.2M</div>
-        </div>
-        </div>
+        <p class="market-intro">
+          Ринок ШІ-інструментів для бізнесу демонструє щорічне зростання понад 35%. Нижче наведено аналіз основних конкурентів за сферою діяльності, розміром компанії, ринками збуту та фінансовими показниками. Розуміння сильних і слабких сторін гравців ринку дозволяє обирати правильну стратегію розвитку.
+        </p>
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">DataPeak</div>
-            <span class="badge">Big Data • Score 88</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Розмір:</b> 200 працівників</div>
-            <div><b>Ринки:</b> Глобально</div>
-            <div><b>Прибуток:</b> $5M</div>
-        </div>
-        </div>
+        <!-- Сітка конкурентів (CSS Grid — 3 колонки) -->
+        <div class="market-grid">
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">FinEdge</div>
-            <span class="badge">FinTech • Score 69</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Розмір:</b> 60 працівників</div>
-            <div><b>Ринки:</b> ЄС, UK</div>
-            <div><b>Прибуток:</b> $0.9M</div>
-        </div>
-        </div>
+          <article class="competitor-card">
+            <img
+              class="comp-img"
+              src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=70"
+              alt="Cognify Labs — команда"
+            />
+            <div class="comp-body">
+              <p class="comp-name">Cognify Labs</p>
+              <p class="comp-sector">Штучний інтелект</p>
+              <div class="comp-metrics">
+                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">120 осіб</p></div>
+                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-up">$3.2M</p></div>
+                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">США · ЄС</p></div>
+                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-up">+34%</p></div>
+              </div>
+            </div>
+          </article>
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">LoopSaaS</div>
-            <span class="badge">SaaS • Score 63</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Розмір:</b> 45 працівників</div>
-            <div><b>Ринки:</b> США</div>
-            <div><b>Прибуток:</b> $0.65M</div>
-        </div>
-        </div>
+          <article class="competitor-card">
+            <img
+              class="comp-img"
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=70"
+              alt="DataMind Co. — аналітика"
+            />
+            <div class="comp-body">
+              <p class="comp-name">DataMind Co.</p>
+              <p class="comp-sector">Аналітика даних</p>
+              <div class="comp-metrics">
+                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">85 осіб</p></div>
+                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-flat">$1.8M</p></div>
+                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">США</p></div>
+                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-flat">+5%</p></div>
+              </div>
+            </div>
+          </article>
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">AImpress</div>
-            <span class="badge">AI • Score 80</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Розмір:</b> 140 працівників</div>
-            <div><b>Ринки:</b> Глобально</div>
-            <div><b>Прибуток:</b> $3.2M</div>
-        </div>
-        </div>
-    </div>
+          <article class="competitor-card">
+            <img
+              class="comp-img"
+              src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=70"
+              alt="Synaptic AG — машинне навчання"
+            />
+            <div class="comp-body">
+              <p class="comp-name">Synaptic AG</p>
+              <p class="comp-sector">Машинне навчання</p>
+              <div class="comp-metrics">
+                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">210 осіб</p></div>
+                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-up">$8.5M</p></div>
+                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">ЄС · АТР</p></div>
+                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-up">+61%</p></div>
+              </div>
+            </div>
+          </article>
 
-    <div class="card card--soft" style="margin-top:12px;">
-        <h3 class="card__title">Тренди та можливості</h3>
-        <div class="grid-3">
-        <div class="callout">
-            <div class="callout__title">AI-помічники</div>
-            <div class="callout__text">Інтеграція AI як підсилення продукту та автоматизації процесів.</div>
-        </div>
-        <div class="callout">
-            <div class="callout__title">Фіндисципліна</div>
-            <div class="callout__text">Контроль витрат, оптимізація команди та прозора аналітика.</div>
-        </div>
-        <div class="callout">
-            <div class="callout__title">Мікро-ніші</div>
-            <div class="callout__text">Фокус на вузькому сегменті й швидкі тести гіпотез.</div>
-        </div>
-        </div>
-    </div>
+          <article class="competitor-card">
+            <img
+              class="comp-img"
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=70"
+              alt="Orion Dynamics — SaaS"
+            />
+            <div class="comp-body">
+              <p class="comp-name">Orion Dynamics</p>
+              <p class="comp-sector">SaaS / ШІ-інструменти</p>
+              <div class="comp-metrics">
+                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">44 особи</p></div>
+                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-down">$620K</p></div>
+                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">США</p></div>
+                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-down">−8%</p></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="competitor-card">
+            <img
+              class="comp-img"
+              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=70"
+              alt="VectorEdge — глибоке навчання"
+            />
+            <div class="comp-body">
+              <p class="comp-name">VectorEdge</p>
+              <p class="comp-sector">Глибоке навчання</p>
+              <div class="comp-metrics">
+                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">67 осіб</p></div>
+                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-up">$1.1M</p></div>
+                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">ЄС · США</p></div>
+                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-up">+22%</p></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="competitor-card">
+            <img
+              class="comp-img"
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=70"
+              alt="PulseAI Inc. — НЛП"
+            />
+            <div class="comp-body">
+              <p class="comp-name">PulseAI Inc.</p>
+              <p class="comp-sector">НЛП / Автоматизація</p>
+              <div class="comp-metrics">
+                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">31 особа</p></div>
+                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-flat">$390K</p></div>
+                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">АТР</p></div>
+                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-flat">+2%</p></div>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /market-grid -->
+      </div>
     </section>
 
-    <!-- INVESTORS -->
-    <section id="investors" class="section">
-    <div class="section__head">
-        <h2>Інвестори</h2>
-        <p>Потенційні інвестори (назва, сфери, об’єм портфелю). </p>
-    </div>
-
-    <div class="grid-cards" aria-label="Список інвесторів">
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">Alpha Ventures</div>
-            <span class="badge">$50M</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Сфери:</b> FinTech, AI</div>
-            <div><b>Фокус:</b> seed–A</div>
-        </div>
+    <!-- ── ІНВЕСТОРИ ──────────────────────────────────────── -->
+    <section id="investors">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2 class="section-title">Інвестори</h2>
         </div>
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">Future Capital</div>
-            <span class="badge">$120M</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Сфери:</b> SaaS</div>
-            <div><b>Фокус:</b> A–B</div>
-        </div>
-        </div>
+        <p class="investors-intro">
+          Залучення правильного інвестора — ключовий крок для масштабування. Нижче представлено список потенційних фінансових партнерів із зазначенням сфери інвестування, інвестиційного чеку та загального об'єму портфелю.
+        </p>
 
-        <div class="item">
-        <div class="item__top">
-            <div class="item__title">Innovate Fund</div>
-            <span class="badge">$75M</span>
-        </div>
-        <div class="item__meta">
-            <div><b>Сфери:</b> Startups, EdTech</div>
-            <div><b>Фокус:</b> seed</div>
-        </div>
-        </div>
-    </div>
+        <!-- Сітка інвесторів (CSS Grid — 3 колонки) -->
+        <div class="investors-grid">
+
+          <div class="investor-card">
+            <img
+              class="investor-img"
+              src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=70"
+              alt="Apex Ventures — офіс"
+            />
+            <div class="investor-body">
+              <div>
+                <p class="investor-name">Apex Ventures</p>
+                <p class="investor-focus">Фокус: ШІ · Глибокі технології</p>
+              </div>
+              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
+                <li><span class="info-key">Етап</span><span class="badge badge-amber">Серія A–B</span></li>
+                <li><span class="info-key">Чек</span><span class="info-val">$2M – $15M</span></li>
+              </ul>
+              <div class="investor-portfolio">
+                <p class="inv-port-label">Об'єм портфелю</p>
+                <p class="inv-port-val">$340M</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="investor-card">
+            <img
+              class="investor-img"
+              src="https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=600&q=70"
+              alt="Sequoia Capital — будівля"
+            />
+            <div class="investor-body">
+              <div>
+                <p class="investor-name">Sequoia Capital</p>
+                <p class="investor-focus">Фокус: SaaS · Споживчий ринок</p>
+              </div>
+              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
+                <li><span class="info-key">Етап</span><span class="badge badge-ember">Seed – Серія C</span></li>
+                <li><span class="info-key">Чек</span><span class="info-val">$500K – $100M</span></li>
+              </ul>
+              <div class="investor-portfolio">
+                <p class="inv-port-label">Об'єм портфелю</p>
+                <p class="inv-port-val">$8.5B</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="investor-card">
+            <img
+              class="investor-img"
+              src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=600&q=70"
+              alt="NordFund — Скандинавія"
+            />
+            <div class="investor-body">
+              <div>
+                <p class="investor-name">NordFund</p>
+                <p class="investor-focus">Фокус: Європейські технології</p>
+              </div>
+              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
+                <li><span class="info-key">Етап</span><span class="badge badge-green">Серія A</span></li>
+                <li><span class="info-key">Чек</span><span class="info-val">$1M – $8M</span></li>
+              </ul>
+              <div class="investor-portfolio">
+                <p class="inv-port-label">Об'єм портфелю</p>
+                <p class="inv-port-val">$210M</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="investor-card">
+            <img
+              class="investor-img"
+              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=70"
+              alt="TechAlpha Partners — дані"
+            />
+            <div class="investor-body">
+              <div>
+                <p class="investor-name">TechAlpha Partners</p>
+                <p class="investor-focus">Фокус: МН · Дані</p>
+              </div>
+              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
+                <li><span class="info-key">Етап</span><span class="badge badge-amber">Pre-A – A</span></li>
+                <li><span class="info-key">Чек</span><span class="info-val">$750K – $5M</span></li>
+              </ul>
+              <div class="investor-portfolio">
+                <p class="inv-port-label">Об'єм портфелю</p>
+                <p class="inv-port-val">$95M</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="investor-card">
+            <img
+              class="investor-img"
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=70"
+              alt="GreenValley VC — природа"
+            />
+            <div class="investor-body">
+              <div>
+                <p class="investor-name">GreenValley VC</p>
+                <p class="investor-focus">Фокус: Impact · Етика ШІ</p>
+              </div>
+              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
+                <li><span class="info-key">Етап</span><span class="badge badge-green">Seed – B</span></li>
+                <li><span class="info-key">Чек</span><span class="info-val">$200K – $12M</span></li>
+              </ul>
+              <div class="investor-portfolio">
+                <p class="inv-port-label">Об'єм портфелю</p>
+                <p class="inv-port-val">$180M</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="investor-card">
+            <img
+              class="investor-img"
+              src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=70"
+              alt="HorizonRise Fund — горизонт міста"
+            />
+            <div class="investor-body">
+              <div>
+                <p class="investor-name">HorizonRise Fund</p>
+                <p class="investor-focus">Фокус: Розширення в АТР</p>
+              </div>
+              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
+                <li><span class="info-key">Етап</span><span class="badge badge-ember">Серія B–C</span></li>
+                <li><span class="info-key">Чек</span><span class="info-val">$5M – $50M</span></li>
+              </ul>
+              <div class="investor-portfolio">
+                <p class="inv-port-label">Об'єм портфелю</p>
+                <p class="inv-port-val">$1.2B</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /investors-grid -->
+      </div>
     </section>
 
-    <!-- REPORT -->
-    <section id="report" class="section">
-    <div class="section__head">
-        <h2>Короткий звіт</h2>
+  </main><!-- /main -->
+
+  <!-- ══ ФУТЕР ════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Launch<span>OS</span></div>
+        <p style="font-family:var(--mono);font-size:0.7rem;color:var(--slate);margin-top:0.3rem;">Симулятор управління стартапом</p>
+      </div>
+      <address class="footer-contact">
+        <p>📍 вул. Івана Франка 107, Львів, Україна</p>
+        <p>📞 <a href="tel:+380441234567">+38 (063) 5926338</a></p>
+        <p>✉ <a href="mailto:hello@launchos.io">anastasiia.rudyk.oi.2024@lpnu.ua</a></p>
+      </address>
     </div>
+    <p class="footer-copy">© 2025 LaunchOS — Симулятор Стартапу. Усі права захищені.</p>
+  </footer>
 
-    <div class="card">
-        <div class="report">
-        <textarea rows="10" readonly>
-Мій стартап: NovaPulse (SaaS, stage: MVP).
-Команда: 18 людей. Ринки: Україна, ЄС. Офіси: Львів, Київ.
+  <script>
+    // ── Активне посилання навігації при прокручуванні ──
+    const sections = document.querySelectorAll('section[id]');
+    const links    = document.querySelectorAll('.nav-links a');
 
-Фінанси:
-• MRR: $120 000
-• Витрати: $80 000
-• Net: +$40 000
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 80) current = sec.id;
+      });
+      links.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
 
-Рекомендація:
-Фокус на зростання конверсії в оплату та утримання користувачів (retention).
+    // ── Бургер-меню для мобільних ──
+    const toggle   = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
 
-Наступні кроки:
-1) Протестувати 2–3 гіпотези росту за 7 днів.
-2) Покращити onboarding та підписку.
-3) Підготувати пітч для інвесторів.
-        </textarea>
-        </div>
-    </div>
-    </section>
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
 
-    <footer class="footer">
-    <div>📍 Львів • 📧 startup@mail.com • ☎ +380 00 000 0000</div>
-    <div class="footer__muted">© 2026 Startup Simulator</div>
-    </footer>
-    </main>
-    <script src="./app.js"></script>
+    // Закрити меню після кліку на посилання
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  </script>
+
 </body>
 </html>
