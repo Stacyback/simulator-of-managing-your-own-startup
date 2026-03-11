@@ -15,13 +15,13 @@
     <nav>
       <a class="nav-logo" href="#">Launch<span>OS</span></a>
 
-      <!-- Кнопка-бургер для мобільних пристроїв -->
       <button class="nav-toggle" id="navToggle" aria-label="Відкрити меню">
         <span></span><span></span><span></span>
       </button>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#startup" class="active">Мій Стартап</a></li>
+        <li><a href="#simulation">Симуляція</a></li>
         <li><a href="#market">Ринок</a></li>
         <li><a href="#investors">Інвестори</a></li>
       </ul>
@@ -32,14 +32,15 @@
   <div class="hero">
     <div class="hero-inner">
       <h1>Побудуй свою <em>імперію</em> з нуля.</h1>
-      <p class="hero-sub">Керуй віртуальним стартапом — розвивай команду, обганяй конкурентів та закривай перший раунд фінансування.</p>
+      <p class="hero-sub">Керуй віртуальним стартапом — моделюй бізнес-процеси, аналізуй конкурентів та закривай перший раунд фінансування.</p>
       <div class="hero-stats">
         <div>
-          <div class="hero-stat-value green">$142K</div>
+          <!-- id для динамічного оновлення через JS -->
+          <div class="hero-stat-value green" id="heroRevenue">$142K</div>
           <div class="hero-stat-label">Місячний дохід</div>
         </div>
         <div>
-          <div class="hero-stat-value amber">14</div>
+          <div class="hero-stat-value amber" id="heroEmployees">14</div>
           <div class="hero-stat-label">Співробітників</div>
         </div>
         <div>
@@ -64,7 +65,7 @@
           <h2 class="section-title">Мій Стартап</h2>
         </div>
 
-        <!-- Банерне зображення стартапу -->
+        <!-- Банерне зображення -->
         <img
           class="startup-banner"
           src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80"
@@ -74,7 +75,7 @@
         <!-- Стаття з описом компанії -->
         <article>
           <p class="startup-intro">
-            <strong>NexGen AI Solutions</strong> — це технологічний стартап у сфері штучного інтелекту, заснований у 2023 році в Києві. Наша місія — демократизувати доступ до інструментів машинного навчання для малого та середнього бізнесу по всьому світу. Наразі компанія перебуває на етапі Серії A та активно розширює присутність на ринках США, Європи та Азійсько-Тихоокеанського регіону.
+            <strong>NexGen AI Solutions</strong> — це технологічний стартап у сфері штучного інтелекту, заснований у 2023 році в Києві. Наша місія — демократизувати доступ до інструментів машинного навчання для малого та середнього бізнесу по всьому світу. Компанія перебуває на етапі Серії A та активно розширює присутність на ринках США, Європи та Азійсько-Тихоокеанського регіону.
           </p>
 
           <!-- Список ключових функцій / переваг продукту -->
@@ -88,97 +89,69 @@
           </ul>
         </article>
 
-        <!-- Картки параметрів компанії (CSS Grid) -->
+        <!-- Картки параметрів (CSS Grid, значення оновлюються через JS) -->
         <div class="startup-grid">
 
           <!-- Інформація про компанію -->
           <div class="startup-card">
             <p class="card-title">NexGen AI Solutions</p>
             <ul class="info-list">
-              <li>
-                <span class="info-key">Сфера</span>
-                <span class="info-val">Штучний інтелект</span>
-              </li>
-              <li>
-                <span class="info-key">Заснована</span>
-                <span class="info-val">2023</span>
-              </li>
-              <li>
-                <span class="info-key">Етап</span>
-                <span class="badge badge-amber">Серія A</span>
-              </li>
-              <li>
-                <span class="info-key">Статус</span>
-                <span class="badge badge-green">Активна</span>
-              </li>
-              <li>
-                <span class="info-key">Ринки збуту</span>
-                <span class="info-val">США · ЄС · АТР</span>
-              </li>
-              <li>
-                <span class="info-key">Офіси</span>
-                <span class="info-val">2 (Львів, Берлін)</span>
-              </li>
-              <li>
-                <span class="info-key">Кількість працівників</span>
-                <span class="info-val">14</span>
-              </li>
+              <li><span class="info-key">Сфера</span><span class="info-val">Штучний інтелект</span></li>
+              <li><span class="info-key">Заснована</span><span class="info-val">2023</span></li>
+              <li><span class="info-key">Етап</span><span class="badge badge-amber">Серія A</span></li>
+              <li><span class="info-key">Статус</span><span class="badge badge-green">Активна</span></li>
+              <li><span class="info-key">Ринки збуту</span><span class="info-val">США · ЄС · АТР</span></li>
+              <li><span class="info-key">Офіси</span><span class="info-val">2 (Львів, Берлін)</span></li>
+              <li><span class="info-key">Кількість працівників</span><span class="info-val" id="valEmployeesInfo">14</span></li>
             </ul>
           </div>
 
-          <!-- Параметри бізнесу -->
+          <!-- Параметри бізнесу (смуги оновлюються JS) -->
           <div class="startup-card">
             <p class="card-title">Параметри бізнесу</p>
             <div class="param-list">
               <div class="param-item">
                 <div class="param-header">
                   <span class="param-name">Співробітники</span>
-                  <span class="param-val">14 / 50</span>
+                  <span class="param-val" id="valEmployees">14 / 50</span>
                 </div>
-                <div class="param-bar"><div class="param-fill amber" style="width:28%"></div></div>
+                <div class="param-bar"><div class="param-fill amber" id="barEmployees" style="width:28%"></div></div>
               </div>
               <div class="param-item">
                 <div class="param-header">
                   <span class="param-name">Місячний дохід</span>
-                  <span class="param-val">$142K</span>
+                  <span class="param-val" id="valRevenue">$142K</span>
                 </div>
-                <div class="param-bar"><div class="param-fill green" style="width:57%"></div></div>
+                <div class="param-bar"><div class="param-fill green" id="barRevenue" style="width:57%"></div></div>
               </div>
               <div class="param-item">
                 <div class="param-header">
                   <span class="param-name">Місячні витрати</span>
-                  <span class="param-val">$98K</span>
+                  <span class="param-val" id="valExpenses">$98K</span>
                 </div>
-                <div class="param-bar"><div class="param-fill amber" style="width:39%"></div></div>
+                <div class="param-bar"><div class="param-fill amber" id="barExpenses" style="width:39%"></div></div>
               </div>
               <div class="param-item">
                 <div class="param-header">
                   <span class="param-name">Частка ринку</span>
-                  <span class="param-val">4.2%</span>
+                  <span class="param-val" id="valMarket">4.2%</span>
                 </div>
-                <div class="param-bar"><div class="param-fill green" style="width:21%"></div></div>
-              </div>
-              <div class="param-item">
-                <div class="param-header">
-                  <span class="param-name">Темп витрат</span>
-                  <span class="param-val">Високий</span>
-                </div>
-                <div class="param-bar"><div class="param-fill red" style="width:71%"></div></div>
+                <div class="param-bar"><div class="param-fill green" id="barMarket" style="width:21%"></div></div>
               </div>
               <div class="param-item">
                 <div class="param-header">
                   <span class="param-name">Задоволеність клієнтів</span>
-                  <span class="param-val">87%</span>
+                  <span class="param-val" id="valSatisfaction">87%</span>
                 </div>
-                <div class="param-bar"><div class="param-fill green" style="width:87%"></div></div>
+                <div class="param-bar"><div class="param-fill green" id="barSatisfaction" style="width:87%"></div></div>
               </div>
             </div>
           </div>
 
-          <!-- Розбивка доходів по ринках -->
+          <!-- Ринки збуту -->
           <div class="startup-card startup-card-full">
             <p class="card-title">Ринки збуту — Розбивка доходів</p>
-            <ul class="info-list" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem 1.5rem;">
+            <ul class="info-list" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem 1.5rem;">
               <li><span class="info-key">США</span><span class="badge badge-green">$74K / міс</span></li>
               <li><span class="info-key">Європа</span><span class="badge badge-amber">$46K / міс</span></li>
               <li><span class="info-key">Азійсько-Тихоокеанський</span><span class="badge badge-ember">$22K / міс</span></li>
@@ -189,7 +162,106 @@
       </div>
     </section>
 
-    <!-- ── РИНОК ──────────────────────────────────────────── -->
+    <!-- ── СИМУЛЯЦІЯ БІЗНЕС-ПРОЦЕСУ ──────────────────────
+         Завдання 2 + 3: форма, if/else, DOM manipulation
+    ──────────────────────────────────────────────────── -->
+    <section id="simulation" style="background:var(--fog);">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2 class="section-title">Моделювання бізнес-процесу</h2>
+        </div>
+
+        <p class="market-intro">
+          Введіть зміни до параметрів стартапу, щоб змоделювати різні сценарії розвитку. JavaScript динамічно оновить смуги прогресу, таблицю порівняння та графік у реальному часі.
+        </p>
+
+        <!-- Кнопка-перемикач (завдання 2, крок 1) -->
+        <button class="sim-toggle-btn" id="toggleSimBtn">▼ Відкрити форму симуляції</button>
+
+        <!-- Форма симуляції (прихована за замовчуванням) -->
+        <div id="simPanel">
+          <p class="sim-panel-title">⚙ Параметри симуляції</p>
+          <p class="sim-panel-sub">Вкажіть зміни відносно поточних реальних значень. Позитивні числа збільшують параметр, від'ємні — зменшують.</p>
+
+          <form id="simForm" novalidate>
+            <div class="sim-fields">
+              <div class="sim-field">
+                <label for="simRevenue">Зміна доходу (тис. $)</label>
+                <input type="number" id="simRevenue" placeholder="напр. +50 або -20" />
+                <p class="hint">Поточне: $142K / міс</p>
+              </div>
+              <div class="sim-field">
+                <label for="simExpenses">Зміна витрат (тис. $)</label>
+                <input type="number" id="simExpenses" placeholder="напр. +10 або -15" />
+                <p class="hint">Поточне: $98K / міс</p>
+              </div>
+              <div class="sim-field">
+                <label for="simEmployees">Зміна кількості працівників</label>
+                <input type="number" id="simEmployees" placeholder="напр. +5 або -2" />
+                <p class="hint">Поточне: 14 осіб</p>
+              </div>
+              <div class="sim-field">
+                <label for="simMarket">Зміна частки ринку (%)</label>
+                <input type="number" id="simMarket" placeholder="напр. +1.5 або -0.5" step="0.1" />
+                <p class="hint">Поточне: 4.2%</p>
+              </div>
+              <div class="sim-field">
+                <label for="simSatisfaction">Зміна задоволеності (%)</label>
+                <input type="number" id="simSatisfaction" placeholder="напр. +5 або -3" />
+                <p class="hint">Поточне: 87%</p>
+              </div>
+            </div>
+
+            <div id="simError" class="sim-error"></div>
+
+            <div class="sim-actions">
+              <button type="submit" class="btn-primary">▶ Запустити симуляцію</button>
+              <button type="button" class="btn-secondary" id="resetSim">↺ Скинути до реальних значень</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Звіт (з'являється після симуляції) -->
+        <div id="reportSection">
+          <div class="section-header" style="margin-top:2rem;">
+            <h3 class="section-title" style="font-size:1.2rem;">Динамічний звіт</h3>
+          </div>
+
+          <div class="report-grid">
+
+            <!-- SVG Графік -->
+            <div class="chart-card">
+              <p class="chart-card-title">📈 Графік параметрів — динаміка симуляцій</p>
+              <div id="chartContainer"></div>
+            </div>
+
+            <!-- Таблиця порівняння -->
+            <div class="table-card">
+              <p class="table-card-title">📊 Таблиця порівняння: Реальні vs Змодельовані</p>
+              <table id="reportTable">
+                <thead>
+                  <tr>
+                    <th>Параметр</th>
+                    <th>Реальне значення</th>
+                    <th>Змодельоване</th>
+                    <th>Різниця</th>
+                  </tr>
+                </thead>
+                <tbody id="reportTbody">
+                  <!-- заповнюється через JS renderReport() -->
+                </tbody>
+              </table>
+            </div>
+
+          </div><!-- /report-grid -->
+        </div><!-- /reportSection -->
+
+      </div>
+    </section>
+
+    <!-- ── РИНОК ──────────────────────────────────────────
+         Завдання 1: сітка рендериться через JS map()
+    ──────────────────────────────────────────────────── -->
     <section id="market">
       <div class="section-inner">
         <div class="section-header">
@@ -197,125 +269,19 @@
         </div>
 
         <p class="market-intro">
-          Ринок ШІ-інструментів для бізнесу демонструє щорічне зростання понад 35%. Нижче наведено аналіз основних конкурентів за сферою діяльності, розміром компанії, ринками збуту та фінансовими показниками. Розуміння сильних і слабких сторін гравців ринку дозволяє обирати правильну стратегію розвитку.
+          Ринок ШІ-інструментів для бізнесу демонструє щорічне зростання понад 35%. Нижче наведено аналіз основних конкурентів — список згенерований через <code>Array.map()</code>. Наведіть на картку для підсвітки.
         </p>
 
-        <!-- Сітка конкурентів (CSS Grid — 3 колонки) -->
-        <div class="market-grid">
-
-          <article class="competitor-card">
-            <img
-              class="comp-img"
-              src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=70"
-              alt="Cognify Labs — команда"
-            />
-            <div class="comp-body">
-              <p class="comp-name">Cognify Labs</p>
-              <p class="comp-sector">Штучний інтелект</p>
-              <div class="comp-metrics">
-                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">120 осіб</p></div>
-                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-up">$3.2M</p></div>
-                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">США · ЄС</p></div>
-                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-up">+34%</p></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="competitor-card">
-            <img
-              class="comp-img"
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=70"
-              alt="DataMind Co. — аналітика"
-            />
-            <div class="comp-body">
-              <p class="comp-name">DataMind Co.</p>
-              <p class="comp-sector">Аналітика даних</p>
-              <div class="comp-metrics">
-                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">85 осіб</p></div>
-                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-flat">$1.8M</p></div>
-                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">США</p></div>
-                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-flat">+5%</p></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="competitor-card">
-            <img
-              class="comp-img"
-              src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=70"
-              alt="Synaptic AG — машинне навчання"
-            />
-            <div class="comp-body">
-              <p class="comp-name">Synaptic AG</p>
-              <p class="comp-sector">Машинне навчання</p>
-              <div class="comp-metrics">
-                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">210 осіб</p></div>
-                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-up">$8.5M</p></div>
-                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">ЄС · АТР</p></div>
-                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-up">+61%</p></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="competitor-card">
-            <img
-              class="comp-img"
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=70"
-              alt="Orion Dynamics — SaaS"
-            />
-            <div class="comp-body">
-              <p class="comp-name">Orion Dynamics</p>
-              <p class="comp-sector">SaaS / ШІ-інструменти</p>
-              <div class="comp-metrics">
-                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">44 особи</p></div>
-                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-down">$620K</p></div>
-                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">США</p></div>
-                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-down">−8%</p></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="competitor-card">
-            <img
-              class="comp-img"
-              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=70"
-              alt="VectorEdge — глибоке навчання"
-            />
-            <div class="comp-body">
-              <p class="comp-name">VectorEdge</p>
-              <p class="comp-sector">Глибоке навчання</p>
-              <div class="comp-metrics">
-                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">67 осіб</p></div>
-                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-up">$1.1M</p></div>
-                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">ЄС · США</p></div>
-                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-up">+22%</p></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="competitor-card">
-            <img
-              class="comp-img"
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=70"
-              alt="PulseAI Inc. — НЛП"
-            />
-            <div class="comp-body">
-              <p class="comp-name">PulseAI Inc.</p>
-              <p class="comp-sector">НЛП / Автоматизація</p>
-              <div class="comp-metrics">
-                <div><p class="comp-metric-label">Розмір</p><p class="comp-metric-val">31 особа</p></div>
-                <div><p class="comp-metric-label">Дохід</p><p class="comp-metric-val trend-flat">$390K</p></div>
-                <div><p class="comp-metric-label">Ринки</p><p class="comp-metric-val">АТР</p></div>
-                <div><p class="comp-metric-label">Зростання</p><p class="comp-metric-val trend-flat">+2%</p></div>
-              </div>
-            </div>
-          </article>
-
-        </div><!-- /market-grid -->
+        <!-- Сітка заповнюється JS через renderCompetitors() + map() -->
+        <div class="market-grid" id="competitorGrid">
+          <!-- JS render -->
+        </div>
       </div>
     </section>
 
-    <!-- ── ІНВЕСТОРИ ──────────────────────────────────────── -->
+    <!-- ── ІНВЕСТОРИ ──────────────────────────────────────
+         Завдання 1: сітка рендериться через JS map()
+    ──────────────────────────────────────────────────── -->
     <section id="investors">
       <div class="section-inner">
         <div class="section-header">
@@ -323,145 +289,13 @@
         </div>
 
         <p class="investors-intro">
-          Залучення правильного інвестора — ключовий крок для масштабування. Нижче представлено список потенційних фінансових партнерів із зазначенням сфери інвестування, інвестиційного чеку та загального об'єму портфелю.
+          Список потенційних інвесторів згенеровано динамічно через <code>Array.map()</code>. Клас бейджа визначається за допомогою <code>if/else</code> на основі етапу інвестування.
         </p>
 
-        <!-- Сітка інвесторів (CSS Grid — 3 колонки) -->
-        <div class="investors-grid">
-
-          <div class="investor-card">
-            <img
-              class="investor-img"
-              src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=70"
-              alt="Apex Ventures — офіс"
-            />
-            <div class="investor-body">
-              <div>
-                <p class="investor-name">Apex Ventures</p>
-                <p class="investor-focus">Фокус: ШІ · Глибокі технології</p>
-              </div>
-              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
-                <li><span class="info-key">Етап</span><span class="badge badge-amber">Серія A–B</span></li>
-                <li><span class="info-key">Чек</span><span class="info-val">$2M – $15M</span></li>
-              </ul>
-              <div class="investor-portfolio">
-                <p class="inv-port-label">Об'єм портфелю</p>
-                <p class="inv-port-val">$340M</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="investor-card">
-            <img
-              class="investor-img"
-              src="https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=600&q=70"
-              alt="Sequoia Capital — будівля"
-            />
-            <div class="investor-body">
-              <div>
-                <p class="investor-name">Sequoia Capital</p>
-                <p class="investor-focus">Фокус: SaaS · Споживчий ринок</p>
-              </div>
-              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
-                <li><span class="info-key">Етап</span><span class="badge badge-ember">Seed – Серія C</span></li>
-                <li><span class="info-key">Чек</span><span class="info-val">$500K – $100M</span></li>
-              </ul>
-              <div class="investor-portfolio">
-                <p class="inv-port-label">Об'єм портфелю</p>
-                <p class="inv-port-val">$8.5B</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="investor-card">
-            <img
-              class="investor-img"
-              src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=600&q=70"
-              alt="NordFund — Скандинавія"
-            />
-            <div class="investor-body">
-              <div>
-                <p class="investor-name">NordFund</p>
-                <p class="investor-focus">Фокус: Європейські технології</p>
-              </div>
-              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
-                <li><span class="info-key">Етап</span><span class="badge badge-green">Серія A</span></li>
-                <li><span class="info-key">Чек</span><span class="info-val">$1M – $8M</span></li>
-              </ul>
-              <div class="investor-portfolio">
-                <p class="inv-port-label">Об'єм портфелю</p>
-                <p class="inv-port-val">$210M</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="investor-card">
-            <img
-              class="investor-img"
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=70"
-              alt="TechAlpha Partners — дані"
-            />
-            <div class="investor-body">
-              <div>
-                <p class="investor-name">TechAlpha Partners</p>
-                <p class="investor-focus">Фокус: МН · Дані</p>
-              </div>
-              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
-                <li><span class="info-key">Етап</span><span class="badge badge-amber">Pre-A – A</span></li>
-                <li><span class="info-key">Чек</span><span class="info-val">$750K – $5M</span></li>
-              </ul>
-              <div class="investor-portfolio">
-                <p class="inv-port-label">Об'єм портфелю</p>
-                <p class="inv-port-val">$95M</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="investor-card">
-            <img
-              class="investor-img"
-              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=70"
-              alt="GreenValley VC — природа"
-            />
-            <div class="investor-body">
-              <div>
-                <p class="investor-name">GreenValley VC</p>
-                <p class="investor-focus">Фокус: Impact · Етика ШІ</p>
-              </div>
-              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
-                <li><span class="info-key">Етап</span><span class="badge badge-green">Seed – B</span></li>
-                <li><span class="info-key">Чек</span><span class="info-val">$200K – $12M</span></li>
-              </ul>
-              <div class="investor-portfolio">
-                <p class="inv-port-label">Об'єм портфелю</p>
-                <p class="inv-port-val">$180M</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="investor-card">
-            <img
-              class="investor-img"
-              src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=70"
-              alt="HorizonRise Fund — горизонт міста"
-            />
-            <div class="investor-body">
-              <div>
-                <p class="investor-name">HorizonRise Fund</p>
-                <p class="investor-focus">Фокус: Розширення в АТР</p>
-              </div>
-              <ul class="info-list" style="border-top:1px solid var(--ash); padding-top:0.8rem;">
-                <li><span class="info-key">Етап</span><span class="badge badge-ember">Серія B–C</span></li>
-                <li><span class="info-key">Чек</span><span class="info-val">$5M – $50M</span></li>
-              </ul>
-              <div class="investor-portfolio">
-                <p class="inv-port-label">Об'єм портфелю</p>
-                <p class="inv-port-val">$1.2B</p>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /investors-grid -->
+        <!-- Сітка заповнюється JS через renderInvestors() + map() -->
+        <div class="investors-grid" id="investorGrid">
+          <!-- JS render -->
+        </div>
       </div>
     </section>
 
@@ -472,7 +306,7 @@
     <div class="footer-inner">
       <div>
         <div class="footer-brand">Launch<span>OS</span></div>
-        <p style="font-family:var(--mono);font-size:0.7rem;color:var(--slate);margin-top:0.3rem;">Симулятор управління стартапом</p>
+        <p style="font-family:var(--mono);font-size:.7rem;color:var(--slate);margin-top:.3rem;">Симулятор управління стартапом</p>
       </div>
       <address class="footer-contact">
         <p>📍 вул. Івана Франка 107, Львів, Україна</p>
@@ -483,34 +317,8 @@
     <p class="footer-copy">© 2025 LaunchOS — Симулятор Стартапу. Усі права захищені.</p>
   </footer>
 
-  <script>
-    // ── Активне посилання навігації при прокручуванні ──
-    const sections = document.querySelectorAll('section[id]');
-    const links    = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 80) current = sec.id;
-      });
-      links.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
-    });
-
-    // ── Бургер-меню для мобільних ──
-    const toggle   = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    toggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-
-    // Закрити меню після кліку на посилання
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
-  </script>
+  <!-- Зовнішній JS файл — підключається перед </body> (вимога лаб. роботи) -->
+  <script src="script.js"></script>
 
 </body>
 </html>

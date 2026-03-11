@@ -721,3 +721,250 @@ footer {
 .nav-toggle {
   display: none;
 }
+
+
+/* ══════════════════════════════════════════════════════
+   СТИЛІ ДЛЯ ЛАБОРАТОРНОЇ №2
+   Симуляція, звіт, графік, форма
+══════════════════════════════════════════════════════ */
+
+/* ── Кнопка перемикача форми ────────────────────────── */
+.sim-toggle-btn {
+  display: inline-block;
+  background: var(--ember);
+  color: var(--chalk);
+  border: none;
+  border-radius: var(--radius);
+  padding: .65rem 1.4rem;
+  font-family: var(--display);
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .03em;
+  margin-bottom: 1.5rem;
+  transition: background .18s, transform .15s;
+}
+
+.sim-toggle-btn:hover {
+  background: #b85e3a;
+  transform: translateY(-1px);
+}
+
+/* ── Панель форми симуляції ─────────────────────────── */
+#simPanel {
+  display: none;
+  background: var(--basalt);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  color: var(--chalk);
+  animation: fadeUp .35s ease both;
+}
+
+.sim-panel-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: .4rem;
+  letter-spacing: -.02em;
+}
+
+.sim-panel-sub {
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--slate);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Сітка полів форми */
+.sim-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sim-field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: .65rem;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .35rem;
+}
+
+.sim-field input {
+  width: 100%;
+  background: var(--ash);
+  border: 1px solid var(--slate);
+  border-radius: 4px;
+  color: var(--chalk);
+  font-family: var(--mono);
+  font-size: .85rem;
+  padding: .5rem .7rem;
+  outline: none;
+  transition: border-color .18s;
+}
+
+.sim-field input:focus {
+  border-color: var(--ember);
+}
+
+.sim-field .hint {
+  font-family: var(--mono);
+  font-size: .62rem;
+  color: var(--slate);
+  margin-top: .25rem;
+}
+
+/* Кнопки форми */
+.sim-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--ember);
+  color: var(--chalk);
+  border: none;
+  border-radius: var(--radius);
+  padding: .65rem 1.6rem;
+  font-family: var(--display);
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .18s, transform .15s;
+}
+
+.btn-primary:hover {
+  background: #b85e3a;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--mist);
+  border: 1px solid var(--slate);
+  border-radius: var(--radius);
+  padding: .6rem 1.2rem;
+  font-family: var(--mono);
+  font-size: .78rem;
+  cursor: pointer;
+  transition: border-color .18s, color .18s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--mist);
+  color: var(--chalk);
+}
+
+/* Помилка форми */
+.sim-error {
+  display: none;
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--ember);
+  background: rgba(212,113,74,.1);
+  border: 1px solid var(--ember);
+  border-radius: 4px;
+  padding: .5rem .8rem;
+  margin-top: 1rem;
+}
+
+/* ── Секція звіту ───────────────────────────────────── */
+#reportSection {
+  display: none;
+  animation: fadeUp .4s ease both;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Графік */
+.chart-card {
+  background: var(--basalt);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  grid-column: 1 / -1;
+}
+
+.chart-card-title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--chalk);
+  margin-bottom: 1rem;
+  letter-spacing: -.02em;
+}
+
+#chartContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Таблиця порівняння */
+.table-card {
+  background: var(--basalt);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  grid-column: 1 / -1;
+  overflow-x: auto;
+}
+
+.table-card-title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--chalk);
+  margin-bottom: 1rem;
+  letter-spacing: -.02em;
+}
+
+#reportTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+
+#reportTable thead tr {
+  border-bottom: 1px solid var(--ash);
+}
+
+#reportTable th {
+  font-family: var(--mono);
+  font-size: .65rem;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: .5rem .75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+#reportTable td {
+  color: var(--chalk);
+  padding: .65rem .75rem;
+  border-bottom: 1px solid rgba(82,93,106,.3);
+}
+
+.diff-positive { color: #6ecfb8; font-weight: 700; }
+.diff-negative { color: var(--ember); font-weight: 700; }
+.diff-neutral  { color: var(--slate); }
+
+/* ── Адаптивність нових елементів ──────────────────── */
+@media (max-width: 900px) {
+  .sim-fields   { grid-template-columns: 1fr 1fr; }
+  .report-grid  { grid-template-columns: 1fr; }
+  .chart-card, .table-card { grid-column: 1; }
+}
+
+@media (max-width: 600px) {
+  .sim-fields   { grid-template-columns: 1fr; }
+  #simPanel     { padding: 1.2rem; }
+  .sim-actions  { flex-direction: column; align-items: stretch; }
+}
