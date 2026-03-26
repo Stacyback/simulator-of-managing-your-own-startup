@@ -967,3 +967,230 @@ footer {
   #simPanel     { padding: 1.2rem; }
   .sim-actions  { flex-direction: column; align-items: stretch; }
 }
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-actions a {
+  text-decoration: none;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  border-radius: var(--radius);
+  padding: 0.75rem 1.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+}
+
+.btn-primary {
+  background: var(--ember);
+  color: var(--chalk);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #b85e3a;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--chalk);
+  border: 1px solid var(--slate);
+}
+
+.btn-secondary:hover {
+  border-color: var(--mist);
+  color: var(--chalk);
+  transform: translateY(-1px);
+}
+header {
+  width: 100%;
+  background: var(--basalt);
+  color: var(--chalk);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--ash);
+}
+
+nav {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 3rem;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--chalk);
+  text-decoration: none;
+}
+
+.nav-logo span {
+  color: var(--ember);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-links a {
+  color: var(--mist);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius);
+  transition: background 0.18s, color 0.18s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background: var(--ash);
+  color: var(--chalk);
+}
+
+.nav-btn-primary {
+  background: var(--ember);
+  color: var(--chalk);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.65rem 1.2rem;
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 0.5rem;
+  transition: background 0.18s, transform 0.15s;
+}
+
+.nav-btn-primary:hover {
+  background: #b85e3a;
+  transform: translateY(-1px);
+}
+/* ── АВТОРИЗАЦІЯ / РЕЄСТРАЦІЯ ─────────────────────── */
+.auth-section {
+  background: var(--fog);
+  min-height: calc(100vh - 72px);
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 560px;
+}
+
+.auth-card {
+  background: var(--chalk);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(43, 48, 56, 0.08);
+}
+
+.auth-header {
+  margin-bottom: 1rem;
+}
+
+.auth-text {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--slate);
+  margin-bottom: 1.5rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.auth-field label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.auth-field input {
+  width: 100%;
+  border: 1px solid var(--mist);
+  background: #fff;
+  color: var(--basalt);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  font-family: var(--display);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.auth-field input:focus {
+  border-color: var(--ember);
+  box-shadow: 0 0 0 3px rgba(212, 113, 74, 0.12);
+}
+
+.auth-submit {
+  margin-top: 0.5rem;
+  background: var(--ember);
+  color: var(--chalk);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.85rem 1.4rem;
+  font-family: var(--display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.15s;
+}
+
+.auth-submit:hover {
+  background: #b85e3a;
+  transform: translateY(-1px);
+}
+
+.auth-footer-text {
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--slate);
+}
+
+.auth-footer-text a {
+  color: var(--ember);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.auth-footer-text a:hover {
+  text-decoration: underline;
+}
