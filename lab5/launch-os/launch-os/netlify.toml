@@ -1,4 +1,0 @@
-[build]
-  base = "lab5/launch-os/launch-os"
-  command = "npm run build"
-  publish = "lab5/launch-os/launch-os/build"
