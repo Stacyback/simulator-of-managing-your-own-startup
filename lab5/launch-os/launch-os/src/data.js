@@ -1,128 +1,185 @@
-export const initialStartup = {
-  name: "NexGen AI Solutions",
-  industry: "Штучний інтелект",
-  founded: 2023,
-  stage: "Серія A",
-  status: "Активна",
-  markets: ["США", "ЄС", "АТР"],
-  offices: ["Київ", "Берлін"],
-  employees: 14,
-  revenue: 142000,
-  expenses: 98000,
-  marketShare: 4.2,
-  satisfaction: 87,
-};
+import React, { useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
 
-export const competitors = [
-  {
-    id: 1,
-    name: "Cognify Labs",
-    sector: "Штучний інтелект",
-    size: 120,
-    revenue: 3200000,
-    markets: "США · ЄС",
-    growth: 34,
-  },
-  {
-    id: 2,
-    name: "DataMind Co.",
-    sector: "Аналітика даних",
-    size: 85,
-    revenue: 1800000,
-    markets: "США",
-    growth: 5,
-  },
-  {
-    id: 3,
-    name: "Synaptic AG",
-    sector: "Машинне навчання",
-    size: 210,
-    revenue: 8500000,
-    markets: "ЄС · АТР",
-    growth: 61,
-  },
-  {
-    id: 4,
-    name: "Orion Dynamics",
-    sector: "SaaS / ШІ",
-    size: 44,
-    revenue: 620000,
-    markets: "США",
-    growth: -8,
-  },
-  {
-    id: 5,
-    name: "VectorEdge",
-    sector: "Глибоке навчання",
-    size: 67,
-    revenue: 1100000,
-    markets: "ЄС · США",
-    growth: 22,
-  },
-  {
-    id: 6,
-    name: "PulseAI Inc.",
-    sector: "НЛП / Автоматизація",
-    size: 31,
-    revenue: 390000,
-    markets: "АТР",
-    growth: 2,
-  },
-];
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-export const investors = [
-  {
-    id: 1,
-    initials: "AV",
-    name: "Apex Ventures",
-    focus: "ШІ · Глибокі технології",
-    stage: "Серія A–B",
-    ticket: "$2M – $15M",
-    portfolio: "$340M",
-  },
-  {
-    id: 2,
-    initials: "SC",
-    name: "Sequoia Capital",
-    focus: "SaaS · Споживчий ринок",
-    stage: "Seed – Серія C",
-    ticket: "$500K – $100M",
-    portfolio: "$8.5B",
-  },
-  {
-    id: 3,
-    initials: "NF",
-    name: "NordFund",
-    focus: "Європейські технології",
-    stage: "Серія A",
-    ticket: "$1M – $8M",
-    portfolio: "$210M",
-  },
-  {
-    id: 4,
-    initials: "TA",
-    name: "TechAlpha Partners",
-    focus: "МН · Дані",
-    stage: "Pre-A – A",
-    ticket: "$750K – $5M",
-    portfolio: "$95M",
-  },
-  {
-    id: 5,
-    initials: "GV",
-    name: "GreenValley VC",
-    focus: "Impact · Етика ШІ",
-    stage: "Seed – B",
-    ticket: "$200K – $12M",
-    portfolio: "$180M",
-  },
-  {
-    id: 6,
-    initials: "HR",
-    name: "HorizonRise Fund",
-    focus: "Розширення в АТР",
-    stage: "Серія B–C",
-    ticket: "$5M – $50M",
-    portfolio: "$1.2B",
-  },
-];
+import LandingPage from "./pages/LandingPage";
+import StartupPage from "./pages/StartupPage";
+import MarketPage from "./pages/MarketPage";
+import InvestorsPage from "./pages/InvestorsPage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+
+import { initialStartup, competitors, investors } from "./data";
+
+import {
+  auth,
+  loadStartupData,
+  saveStartupData,
+  loadSimulationHistory,
+  saveSimulationHistory,
+} from "./firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+
+function App() {
+  const [startup, setStartup] = useState(initialStartup);
+  const [history, setHistory] = useState([{ label: "Реальні", ...initialStartup }]);
+  const [simulationCount, setSimulationCount] = useState(0);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+
+      if (currentUser) {
+        setLoading(true);
+
+        const startupResult = await loadStartupData(currentUser.uid);
+        if (startupResult.success && startupResult.data) {
+          setStartup(startupResult.data.startupData);
+          setSimulationCount(startupResult.data.simulationCount || 0);
+        } else {
+          await saveStartupData(currentUser.uid, {
+            startupData: initialStartup,
+            simulationCount: 0,
+          });
+        }
+
+        const historyResult = await loadSimulationHistory(currentUser.uid);
+        if (historyResult.success && historyResult.data) {
+          setHistory(historyResult.data);
+        } else {
+          await saveSimulationHistory(currentUser.uid, [
+            { label: "Реальні", ...initialStartup },
+          ]);
+        }
+
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      const saveData = async () => {
+        await saveStartupData(user.uid, {
+          startupData: startup,
+          simulationCount: simulationCount,
+        });
+        await saveSimulationHistory(user.uid, history);
+      };
+
+      saveData();
+    }
+  }, [startup, history, simulationCount, user]);
+
+  const runSimulation = (changes) => {
+    const updated = {
+      ...startup,
+      revenue: Math.max(
+        0,
+        startup.revenue + (Number(changes.revenue) || 0) * 1000
+      ),
+      expenses: Math.max(
+        0,
+        startup.expenses + (Number(changes.expenses) || 0) * 1000
+      ),
+      employees: Math.max(1, startup.employees + (Number(changes.employees) || 0)),
+      marketShare: Math.max(
+        0,
+        Math.min(100, startup.marketShare + (Number(changes.marketShare) || 0))
+      ),
+      satisfaction: Math.max(
+        0,
+        Math.min(100, startup.satisfaction + (Number(changes.satisfaction) || 0))
+      ),
+    };
+
+    const nextCount = simulationCount + 1;
+    setSimulationCount(nextCount);
+    setStartup(updated);
+
+    setHistory((prev) => {
+      const next = [...prev, { label: `Симуляція ${nextCount}`, ...updated }];
+      return next.length > 5 ? next.slice(next.length - 5) : next;
+    });
+  };
+
+  const resetSimulation = () => {
+    setStartup(initialStartup);
+    setHistory([{ label: "Реальні", ...initialStartup }]);
+    setSimulationCount(0);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert("Ви вийшли з акаунта");
+    } catch (error) {
+      alert("Помилка виходу: " + error.message);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <h2>Завантаження...</h2>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Navbar user={user} onLogout={handleLogout} />
+
+      <Routes>
+        <Route path="/" element={<LandingPage user={user} />} />
+
+        <Route
+          path="/market"
+          element={<MarketPage competitors={competitors} />}
+        />
+
+        <Route
+          path="/investors"
+          element={<InvestorsPage investors={investors} />}
+        />
+
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route
+          path="/startup"
+          element={
+            <ProtectedRoute user={user}>
+              <StartupPage
+                startup={startup}
+                history={history}
+                onSimulate={runSimulation}
+                onReset={resetSimulation}
+              />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
+  );
+}
+
+export default App;

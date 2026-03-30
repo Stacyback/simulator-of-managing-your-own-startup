@@ -14,7 +14,13 @@ import LoginPage from "./pages/LoginPage";
 
 import { initialStartup, competitors, investors } from "./data";
 
-import { auth, loadStartupData, saveStartupData, loadSimulationHistory, saveSimulationHistory } from "./firebase";
+import {
+  auth,
+  loadStartupData,
+  saveStartupData,
+  loadSimulationHistory,
+  saveSimulationHistory,
+} from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function App() {
@@ -24,35 +30,33 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Завантаження даних користувача при вході
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      
+
       if (currentUser) {
         setLoading(true);
-        
-        // Завантажуємо дані стартапу
+
         const startupResult = await loadStartupData(currentUser.uid);
         if (startupResult.success && startupResult.data) {
           setStartup(startupResult.data.startupData);
           setSimulationCount(startupResult.data.simulationCount || 0);
         } else {
-          // Якщо даних немає, зберігаємо початкові
           await saveStartupData(currentUser.uid, {
             startupData: initialStartup,
-            simulationCount: 0
+            simulationCount: 0,
           });
         }
-        
-        // Завантажуємо історію симуляцій
+
         const historyResult = await loadSimulationHistory(currentUser.uid);
         if (historyResult.success && historyResult.data) {
           setHistory(historyResult.data);
         } else {
-          await saveSimulationHistory(currentUser.uid, [{ label: "Реальні", ...initialStartup }]);
+          await saveSimulationHistory(currentUser.uid, [
+            { label: "Реальні", ...initialStartup },
+          ]);
         }
-        
+
         setLoading(false);
       } else {
         setLoading(false);
@@ -62,17 +66,16 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // Автоматичне збереження при зміні даних
   useEffect(() => {
     if (user) {
       const saveData = async () => {
         await saveStartupData(user.uid, {
           startupData: startup,
-          simulationCount: simulationCount
+          simulationCount: simulationCount,
         });
         await saveSimulationHistory(user.uid, history);
       };
-      
+
       saveData();
     }
   }, [startup, history, simulationCount, user]);
@@ -88,10 +91,7 @@ function App() {
         0,
         startup.expenses + (Number(changes.expenses) || 0) * 1000
       ),
-      employees: Math.max(
-        1,
-        startup.employees + (Number(changes.employees) || 0)
-      ),
+      employees: Math.max(1, startup.employees + (Number(changes.employees) || 0)),
       marketShare: Math.max(
         0,
         Math.min(100, startup.marketShare + (Number(changes.marketShare) || 0))
@@ -129,12 +129,14 @@ function App() {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <h2>Завантаження...</h2>
       </div>
     );
@@ -145,10 +147,7 @@ function App() {
       <Navbar user={user} onLogout={handleLogout} />
 
       <Routes>
-        <Route
-          path="/"
-          element={<LandingPage user={user} investors={investors} />}
-        />
+        <Route path="/" element={<LandingPage user={user} />} />
 
         <Route
           path="/market"
