@@ -2,9 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const admin = require('firebase-admin');
-const path = require('path');
 
-// Завантаження змінних середовища
 dotenv.config();
 
 if (!process.env.JWT_SECRET) {
@@ -17,18 +15,12 @@ if (!process.env.FIREBASE_API_KEY) {
   process.exit(1);
 }
 
-// Ініціалізація Firebase Admin
 let db;
 try {
   let serviceAccount;
 
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
-    const decoded = Buffer.from(
-      process.env.FIREBASE_SERVICE_ACCOUNT_BASE64,
-      'base64'
-    ).toString('utf8');
-
-    serviceAccount = JSON.parse(decoded);
+  if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
   } else {
     serviceAccount = require('./serviceAccountKey.json');
   }
@@ -48,7 +40,6 @@ try {
 
 const app = express();
 
-// Middleware
 app.use(cors({
   origin: [
     'http://localhost:3000',
@@ -59,19 +50,12 @@ app.use(cors({
 
 app.use(express.json());
 
-// Якщо захочеш віддавати React build через Express, можна буде розкоментувати пізніше
-// const clientBuildPath = path.join(__dirname, '../build');
-// app.use(express.static(clientBuildPath));
-
-// Роути
 const authRoutes = require('./routes/auth');
 const startupRoutes = require('./routes/startup');
 
-// Використання роутів
 app.use('/api/auth', authRoutes);
 app.use('/api/startup', startupRoutes);
 
-// Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -79,12 +63,6 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
-
-// Якщо захочеш віддавати фронтенд через Express, можна буде розкоментувати
-// app.get('*', (req, res, next) => {
-//   if (req.path.startsWith('/api')) return next();
-//   res.sendFile(path.join(clientBuildPath, 'index.html'));
-// });
 
 const PORT = process.env.PORT || 5000;
 
