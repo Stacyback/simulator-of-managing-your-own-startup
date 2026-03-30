@@ -1,74 +1,63 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { API_URL, saveToken } from "../firebase";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Вхід успішний!");
-      navigate("/startup");
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        saveToken(data.token);
+        alert("Вхід успішний!");
+        navigate("/startup");
+      } else {
+        setError(data.error);
+      }
     } catch (error) {
-      alert("Помилка входу: " + error.message);
+      setError("Помилка підключення до сервера");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <section className="auth-section">
-      <div className="auth-container">
-        <div className="auth-card">
-          <div className="section-header auth-header">
-            <h2 className="section-title">Вхід</h2>
-            <span className="section-tag">Login</span>
-          </div>
-
-          <p className="auth-text">
-            Увійди в LaunchOS, щоб отримати доступ до свого стартапу.
-          </p>
-
-          <form className="auth-form" onSubmit={handleLogin}>
-            <div className="auth-field">
-              <label htmlFor="login-email">Email</label>
-              <input
-                id="login-email"
-                type="email"
-                placeholder="Введи email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="auth-field">
-              <label htmlFor="login-password">Пароль</label>
-              <input
-                id="login-password"
-                type="password"
-                placeholder="Введи пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <button type="submit" className="auth-submit">
-              Увійти
-            </button>
-          </form>
-
-          <p className="auth-footer-text">
-            Не маєш акаунта? <Link to="/register">Реєстрація</Link>
-          </p>
+    <div style={{ maxWidth: "400px", margin: "50px auto", padding: "20px", border: "1px solid #ddd", borderRadius: "8px" }}>
+      <h2>Вхід</h2>
+      {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: "100%", padding: "8px" }} required disabled={loading} />
         </div>
-      </div>
-    </section>
+        <div style={{ marginBottom: "15px" }}>
+          <label>Пароль:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: "100%", padding: "8px" }} required disabled={loading} />
+        </div>
+        <button type="submit" style={{ width: "100%", padding: "10px", background: "#007bff", color: "white", border: "none" }} disabled={loading}>
+          {loading ? "Завантаження..." : "Увійти"}
+        </button>
+      </form>
+      <p style={{ marginTop: "15px", textAlign: "center" }}>
+        Не маєш акаунта? <Link to="/register">Реєстрація</Link>
+      </p>
+    </div>
   );
 }
 

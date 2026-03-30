@@ -12,9 +12,48 @@ const firebaseConfig = {
   measurementId: "G-G1H031ZHD1"
 };
 
-// Ініціалізація
 const app = initializeApp(firebaseConfig);
 
-// Експортуємо сервіси, щоб юзати їх в компонентах
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// API URL для сервера
+export const API_URL = 'http://localhost:5000/api';
+
+// Функції для JWT
+export const saveToken = (token) => {
+  localStorage.setItem('jwt_token', token);
+};
+
+export const getToken = () => {
+  return localStorage.getItem('jwt_token');
+};
+
+export const removeToken = () => {
+  localStorage.removeItem('jwt_token');
+};
+
+export const authFetch = async (endpoint, options = {}) => {
+  const token = getToken();
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    ...options.headers
+  };
+  
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    headers
+  });
+  
+  if (response.status === 401) {
+    removeToken();
+    window.location.href = '/login';
+  }
+  
+  return response;
+};
