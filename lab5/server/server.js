@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const admin = require('firebase-admin');
+const path = require('path');
 
+// Завантаження змінних середовища
 dotenv.config();
 
 if (!process.env.JWT_SECRET) {
@@ -15,6 +17,7 @@ if (!process.env.FIREBASE_API_KEY) {
   process.exit(1);
 }
 
+// Ініціалізація Firebase Admin
 let db;
 try {
   let serviceAccount;
@@ -40,6 +43,7 @@ try {
 
 const app = express();
 
+// Middleware
 app.use(cors({
   origin: [
     'http://localhost:3000',
@@ -51,18 +55,38 @@ app.use(cors({
 
 app.use(express.json());
 
+// API routes
 const authRoutes = require('./routes/auth');
 const startupRoutes = require('./routes/startup');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/startup', startupRoutes);
 
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
     message: 'Server is running',
     timestamp: new Date().toISOString(),
   });
+});
+
+// Головний маршрут для перевірки
+app.get('/api', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'LaunchOS API is running'
+  });
+});
+
+// Віддача статичних файлів фронтенду
+const clientBuildPath = path.join(__dirname, 'build');
+app.use(express.static(clientBuildPath));
+
+// Для React Router: всі не-API маршрути ведуть на index.html
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
