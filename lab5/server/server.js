@@ -8,18 +8,30 @@ const path = require('path');
 dotenv.config();
 
 if (!process.env.JWT_SECRET) {
-  console.error('❌ JWT_SECRET is missing in .env');
+  console.error('❌ JWT_SECRET is missing in .env or Render Environment Variables');
   process.exit(1);
 }
 
 if (!process.env.FIREBASE_API_KEY) {
-  console.error('❌ FIREBASE_API_KEY is missing in .env');
+  console.error('❌ FIREBASE_API_KEY is missing in .env or Render Environment Variables');
   process.exit(1);
 }
 
 // Ініціалізація Firebase Admin
+let db;
 try {
-  const serviceAccount = require('./serviceAccountKey.json');
+  let serviceAccount;
+
+  if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
+    const decoded = Buffer.from(
+      process.env.FIREBASE_SERVICE_ACCOUNT_BASE64,
+      'base64'
+    ).toString('utf8');
+
+    serviceAccount = JSON.parse(decoded);
+  } else {
+    serviceAccount = require('./serviceAccountKey.json');
+  }
 
   if (!admin.apps.length) {
     admin.initializeApp({
@@ -27,6 +39,8 @@ try {
     });
     console.log('✅ Firebase Admin initialized');
   }
+
+  db = admin.firestore();
 } catch (error) {
   console.error('❌ Firebase Admin initialization failed:', error.message);
   process.exit(1);
@@ -36,16 +50,24 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5000'],
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5000',
+  ],
   credentials: true,
 }));
 
 app.use(express.json());
 
+// Якщо захочеш віддавати React build через Express, можна буде розкоментувати пізніше
+// const clientBuildPath = path.join(__dirname, '../build');
+// app.use(express.static(clientBuildPath));
+
 // Роути
 const authRoutes = require('./routes/auth');
 const startupRoutes = require('./routes/startup');
 
+// Використання роутів
 app.use('/api/auth', authRoutes);
 app.use('/api/startup', startupRoutes);
 
@@ -58,19 +80,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-/*
-  Якщо захочеш хостити React build через Express,
-  розкоментуй цей блок і вкажи правильний шлях до build:
-
-const clientBuildPath = path.join(__dirname, '../build');
-app.use(express.static(clientBuildPath));
-
-app.get('*', (req, res) => {
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  }
-});
-*/
+// Якщо захочеш віддавати фронтенд через Express, можна буде розкоментувати
+// app.get('*', (req, res, next) => {
+//   if (req.path.startsWith('/api')) return next();
+//   res.sendFile(path.join(clientBuildPath, 'index.html'));
+// });
 
 const PORT = process.env.PORT || 5000;
 
