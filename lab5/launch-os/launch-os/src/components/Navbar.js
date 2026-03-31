@@ -8,7 +8,7 @@ function Navbar({ onLogout }) {
     <header>
       <nav>
         <Link to="/" className="nav-logo">
-          TEST-NAVBAR-NEW <span>LaunchOS</span>
+          <span>LaunchOS</span>
         </Link>
 
         <div className="nav-links">
