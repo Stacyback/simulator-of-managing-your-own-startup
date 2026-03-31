@@ -74,14 +74,16 @@ function App() {
   };
 
   const handleLogout = async () => {
-    try {
-      localStorage.removeItem("token");
-      await signOut(auth);
-      alert("Ви вийшли з акаунта");
-    } catch (error) {
-      alert("Помилка виходу: " + error.message);
-    }
-  };
+  try {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    await signOut(auth).catch(() => {});
+    alert("Ви вийшли з акаунта");
+    window.location.href = "/login";
+  } catch (error) {
+    alert("Помилка виходу: " + error.message);
+  }
+};
 
   if (loading) {
     return (
@@ -119,22 +121,22 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
 
         <Route
-          path="/startup"
-          element={
-            <ProtectedRoute user={user}>
-              <StartupPage
-                startup={startup}
-                setStartup={setStartup}
-                history={history}
-                setHistory={setHistory}
-                simulationCount={simulationCount}
-                setSimulationCount={setSimulationCount}
-                onSimulate={runSimulation}
-                onReset={resetSimulation}
-              />
-            </ProtectedRoute>
-          }
+        path="/startup"
+        element={
+        <ProtectedRoute>
+        <StartupPage
+        startup={startup}
+        setStartup={setStartup}
+        history={history}
+        setHistory={setHistory}
+        simulationCount={simulationCount}
+        setSimulationCount={setSimulationCount}
+        onSimulate={runSimulation}
+        onReset={resetSimulation}
         />
+      </ProtectedRoute>
+    }
+  />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
