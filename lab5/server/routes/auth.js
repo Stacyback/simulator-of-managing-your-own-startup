@@ -6,7 +6,6 @@ const fetch = require('node-fetch');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
-const db = admin.firestore();
 
 // Реєстрація
 router.post('/register', async (req, res) => {
@@ -33,17 +32,6 @@ router.post('/register', async (req, res) => {
       displayName: name || '',
     });
 
-    console.log('✅ Firebase Auth user created:', userRecord.uid);
-
-    await db.collection('users').doc(userRecord.uid).set({
-      uid: userRecord.uid,
-      email: userRecord.email,
-      name: name || '',
-      createdAt: new Date().toISOString(),
-    });
-
-    console.log('✅ Firestore user document created:', userRecord.uid);
-
     const token = jwt.sign(
       {
         uid: userRecord.uid,
@@ -64,7 +52,7 @@ router.post('/register', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('❌ Помилка реєстрації:', error);
+    console.error('Помилка реєстрації:', error);
     return res.status(400).json({
       success: false,
       error: error.message || 'Помилка реєстрації',
@@ -107,14 +95,12 @@ router.post('/login', async (req, res) => {
     }
 
     const userRecord = await admin.auth().getUser(firebaseData.localId);
-    const userDoc = await db.collection('users').doc(userRecord.uid).get();
-    const userData = userDoc.exists ? userDoc.data() : {};
 
     const token = jwt.sign(
       {
         uid: userRecord.uid,
         email: userRecord.email,
-        name: userData.name || userRecord.displayName || '',
+        name: userRecord.displayName || '',
       },
       JWT_SECRET,
       { expiresIn: '7d' }
@@ -126,11 +112,11 @@ router.post('/login', async (req, res) => {
       user: {
         uid: userRecord.uid,
         email: userRecord.email,
-        name: userData.name || userRecord.displayName || '',
+        name: userRecord.displayName || '',
       },
     });
   } catch (error) {
-    console.error('❌ Помилка входу:', error);
+    console.error('Помилка входу:', error);
     return res.status(500).json({
       success: false,
       error: 'Помилка входу в систему',
@@ -141,22 +127,12 @@ router.post('/login', async (req, res) => {
 // Профіль
 router.get('/profile', require('../middleware/auth'), async (req, res) => {
   try {
-    const userId = req.user.uid;
-    const userDoc = await db.collection('users').doc(userId).get();
-
-    if (!userDoc.exists) {
-      return res.status(404).json({
-        success: false,
-        error: 'Користувача не знайдено',
-      });
-    }
-
     return res.json({
       success: true,
-      user: userDoc.data(),
+      user: req.user,
     });
   } catch (error) {
-    console.error('❌ Помилка отримання профілю:', error);
+    console.error('Помилка отримання профілю:', error);
     return res.status(500).json({
       success: false,
       error: 'Не вдалося отримати профіль',
