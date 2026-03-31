@@ -102,7 +102,7 @@ function App() {
 
   return (
     <>
-      <Navbar user={user} onLogout={handleLogout} />
+      <Navbar onLogout={handleLogout} />
 
       <Routes>
         <Route path="/" element={<LandingPage user={user} />} />

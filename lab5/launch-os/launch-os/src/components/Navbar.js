@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar({ user, onLogout }) {
+function Navbar({ onLogout }) {
+  const token = localStorage.getItem("token");
+
   return (
     <header>
       <nav>
@@ -14,7 +16,7 @@ function Navbar({ user, onLogout }) {
           <Link to="/market">Ринок</Link>
           <Link to="/investors">Інвестори</Link>
 
-          {user ? (
+          {token ? (
             <>
               <Link to="/startup">Мій стартап</Link>
               <button className="nav-btn-primary" onClick={onLogout}>
