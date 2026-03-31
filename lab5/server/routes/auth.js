@@ -3,9 +3,10 @@ const router = express.Router();
 const admin = require('firebase-admin');
 const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
-const db = admin.firestore();
+
 const JWT_SECRET = process.env.JWT_SECRET;
 const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+const db = admin.firestore();
 
 // Реєстрація
 router.post('/register', async (req, res) => {
@@ -15,14 +16,14 @@ router.post('/register', async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        error: 'Email та пароль обов’язкові',
+        error: "Email та пароль обов'язкові",
       });
     }
 
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        error: 'Пароль повинен містити не менше 6 символів',
+        error: "Пароль повинен містити не менше 6 символів",
       });
     }
 
@@ -32,12 +33,16 @@ router.post('/register', async (req, res) => {
       displayName: name || '',
     });
 
+    console.log('✅ Firebase Auth user created:', userRecord.uid);
+
     await db.collection('users').doc(userRecord.uid).set({
       uid: userRecord.uid,
       email: userRecord.email,
       name: name || '',
       createdAt: new Date().toISOString(),
     });
+
+    console.log('✅ Firestore user document created:', userRecord.uid);
 
     const token = jwt.sign(
       {
@@ -59,7 +64,7 @@ router.post('/register', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Помилка реєстрації:', error);
+    console.error('❌ Помилка реєстрації:', error);
     return res.status(400).json({
       success: false,
       error: error.message || 'Помилка реєстрації',
@@ -75,18 +80,15 @@ router.post('/login', async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        error: 'Email та пароль обов’язкові',
+        error: "Email та пароль обов'язкові",
       });
     }
 
-    // Перевірка email + password через Firebase Auth REST API
     const firebaseResponse = await fetch(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
       {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
           password,
@@ -128,7 +130,7 @@ router.post('/login', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Помилка входу:', error);
+    console.error('❌ Помилка входу:', error);
     return res.status(500).json({
       success: false,
       error: 'Помилка входу в систему',
@@ -154,7 +156,7 @@ router.get('/profile', require('../middleware/auth'), async (req, res) => {
       user: userDoc.data(),
     });
   } catch (error) {
-    console.error('Помилка отримання профілю:', error);
+    console.error('❌ Помилка отримання профілю:', error);
     return res.status(500).json({
       success: false,
       error: 'Не вдалося отримати профіль',
