@@ -1,36 +1,46 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://launch-os-backend.onrender.com/api"
+    : "http://localhost:5000/api";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        email: user.email,
-        createdAt: new Date().toISOString(),
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+        }),
       });
 
-      alert("Реєстрація успішна!");
-      navigate("/startup");
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        alert("Реєстрація успішна!");
+        navigate("/startup");
+      } else {
+        alert(data.error || "Помилка реєстрації");
+      }
     } catch (error) {
-      alert("Помилка реєстрації: " + error.message);
+      alert("Помилка з'єднання із сервером");
     }
   };
 
@@ -48,6 +58,17 @@ function RegisterPage() {
           </p>
 
           <form className="auth-form" onSubmit={handleRegister}>
+            <div className="auth-field">
+              <label htmlFor="register-name">Ім’я</label>
+              <input
+                id="register-name"
+                type="text"
+                placeholder="Введи ім’я"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
             <div className="auth-field">
               <label htmlFor="register-email">Email</label>
               <input

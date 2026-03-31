@@ -13,14 +13,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 
 import { initialStartup, competitors, investors } from "./data";
-
-import {
-  auth,
-  loadStartupData,
-  saveStartupData,
-  loadSimulationHistory,
-  saveSimulationHistory,
-} from "./firebase";
+import { auth } from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function App() {
@@ -33,52 +26,11 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-
-      if (currentUser) {
-        setLoading(true);
-
-        const startupResult = await loadStartupData(currentUser.uid);
-        if (startupResult.success && startupResult.data) {
-          setStartup(startupResult.data.startupData);
-          setSimulationCount(startupResult.data.simulationCount || 0);
-        } else {
-          await saveStartupData(currentUser.uid, {
-            startupData: initialStartup,
-            simulationCount: 0,
-          });
-        }
-
-        const historyResult = await loadSimulationHistory(currentUser.uid);
-        if (historyResult.success && historyResult.data) {
-          setHistory(historyResult.data);
-        } else {
-          await saveSimulationHistory(currentUser.uid, [
-            { label: "Реальні", ...initialStartup },
-          ]);
-        }
-
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      const saveData = async () => {
-        await saveStartupData(user.uid, {
-          startupData: startup,
-          simulationCount: simulationCount,
-        });
-        await saveSimulationHistory(user.uid, history);
-      };
-
-      saveData();
-    }
-  }, [startup, history, simulationCount, user]);
 
   const runSimulation = (changes) => {
     const updated = {
@@ -91,7 +43,10 @@ function App() {
         0,
         startup.expenses + (Number(changes.expenses) || 0) * 1000
       ),
-      employees: Math.max(1, startup.employees + (Number(changes.employees) || 0)),
+      employees: Math.max(
+        1,
+        startup.employees + (Number(changes.employees) || 0)
+      ),
       marketShare: Math.max(
         0,
         Math.min(100, startup.marketShare + (Number(changes.marketShare) || 0))
@@ -120,6 +75,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
+      localStorage.removeItem("token");
       await signOut(auth);
       alert("Ви вийшли з акаунта");
     } catch (error) {
@@ -168,7 +124,11 @@ function App() {
             <ProtectedRoute user={user}>
               <StartupPage
                 startup={startup}
+                setStartup={setStartup}
                 history={history}
+                setHistory={setHistory}
+                simulationCount={simulationCount}
+                setSimulationCount={setSimulationCount}
                 onSimulate={runSimulation}
                 onReset={resetSimulation}
               />

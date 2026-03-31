@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://launch-os-backend.onrender.com/api"
+    : "http://localhost:5000/api";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,11 +15,30 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Вхід успішний!");
-      navigate("/startup");
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        alert("Вхід успішний!");
+        navigate("/startup");
+      } else {
+        alert(data.error || "Помилка входу");
+      }
     } catch (error) {
-      alert("Помилка входу: " + error.message);
+      alert("Помилка з'єднання із сервером");
     }
   };
 
